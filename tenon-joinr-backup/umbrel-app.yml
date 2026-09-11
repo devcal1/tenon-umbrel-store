@@ -1,0 +1,78 @@
+# THIS `id` IS PERMANENT — see umbrel-app-store.yml. Umbrel treats a change of app id (or of the
+# store id it is prefixed with) as uninstall-and-reinstall, and uninstall deletes this app's data
+# directory without asking. That directory holds every backup.
+#
+# EVERY REQUIRED FIELD IS FILLED even where a community store would tolerate a blank. umbreld's
+# runtime validation of this schema is currently commented out, so a sloppy manifest installs
+# today and breaks on the day validation is switched back on. The required set is
+# `REQUIRED_MANIFEST_FIELDS` in getumbrel/umbrel-apps' own `.tools/lint-apps.mjs`, read on
+# 11 Sep 2026: manifestVersion, id, category, name, version, tagline, description, developer,
+# website, dependencies, repo, support, port, gallery, path, submitter, submission.
+#
+# `manifestVersion: 1` and not 1.1: 1.1 exists for apps that use lifecycle hooks, and this one
+# uses none — it keeps its own calendar inside the container, because umbrelOS has no scheduling
+# primitive and its hooks are not time-based.
+#
+# BUMP `version:` ON EVERY IMAGE CHANGE. Umbrel offers an update only when this field differs from
+# the installed one, polled about every five minutes. A new image pushed without a bump here
+# reaches nobody.
+manifestVersion: 1
+id: tenon-joinr-backup
+category: files
+name: Joinr Backup
+version: '1.0.0'
+tagline: Weekly encrypted backup of the Joinr database and the files customers uploaded
+icon: https://raw.githubusercontent.com/devcal1/tenon-umbrel-store/master/tenon-joinr-backup/icon.svg
+description: >-
+  Takes a weekly encrypted copy of the Joinr production database and of every file customers have
+  uploaded to it, and keeps the newest sixteen on this server.
+
+
+  ⚠️ **UNINSTALLING THIS APP DELETES EVERY BACKUP IT HOLDS.** Umbrel removes an app's data
+  directory when the app is uninstalled, without asking, and this app's data directory is where
+  the archives live. Download the newest archive from the app's own page before you uninstall it.
+
+
+  **What one backup contains:** the whole database — organisations, people, quotes, rate cards,
+  history, and the sign-in accounts with their passwords — as one `pg_dump` file, plus every
+  logo, banner and terms PDF from the app's file storage, which no database backup covers. It is
+  a single 7-Zip archive encrypted with AES-256, with the file names encrypted too.
+
+
+  **The passphrase cannot be recovered.** Not by Tenon, not by Umbrel, not by anybody. It belongs
+  in a password manager and on paper.
+
+
+  **Set-up:** the app needs four credentials placed in its data directory on this server. They are
+  put there over SSH by `umbrel-backup-secrets.cmd` in the tenon-quotr repository, so that no
+  password ever travels through a browser or a chat window. Until they are there the app's page
+  says which are missing and takes no backup.
+
+
+  Every backup is proved before it is kept: the database dump is read back with `pg_restore`, and
+  the finished archive is opened again with its own passphrase. An archive that fails either check
+  is parked under a name this app will never count as a backup, and the page says so.
+releaseNotes: >-
+  First release. Takes over the weekly off-platform backup from a Windows Scheduled Task on a
+  laptop, so that a job the business cannot afford to miss no longer depends on one machine being
+  awake. It keeps its own calendar and catches up on a backup missed while the server was off.
+developer: Tenon
+website: https://joinr.com.au
+dependencies: []
+repo: https://github.com/devcal1/tenon-umbrel-store
+support: https://github.com/devcal1/tenon-umbrel-store/issues
+# Checked by hand on 11 Sep 2026 against every `port:` in every app manifest in all three app
+# stores on this device (the official store, theretromike's, and TH Cabinets'): the whole 4860–4999
+# band was free. The linter's `manifest.port_unique` only indexes the store it is pointed at, so
+# this is the check that matters for a community app.
+port: 4931
+gallery: []
+path: ''
+defaultUsername: ''
+defaultPassword: ''
+submitter: Tenon
+# The official store's linter requires this to be a valid URL, because there it means "the pull
+# request that submitted this app". A community app has no such pull request, and leaving it blank
+# is two permanent lint errors — which is how a lint output stops being read. So it names the
+# repository this app is actually published from, which is the nearest true statement.
+submission: https://github.com/devcal1/tenon-umbrel-store

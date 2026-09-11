@@ -1,0 +1,3 @@
+# LF everywhere. umbreld clones this repository on Linux and reads these files with a YAML parser
+# and a shell; nothing here should ever carry CRLF because it was edited on Windows.
+* text=auto eol=lf

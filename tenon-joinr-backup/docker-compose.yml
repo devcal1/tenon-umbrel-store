@@ -1,0 +1,50 @@
+# THE IMAGE IS PINNED BY TAG **AND** DIGEST. getumbrel/umbrel-apps' own linter makes that an
+# error rather than a warning (`image.pinned`), and for this app it is the point rather than a
+# formality: the digest is exactly what code is taking the business's backups, and a moving tag
+# would mean nobody could say.
+#
+# The tag must be a real version and not `latest` — the linter warns on a pinned `latest` too.
+# Bump it here AND in umbrel-app.yml's `version:` together; Umbrel offers an update only when the
+# manifest version changes, so a new digest on its own reaches nobody.
+
+version: '3.7'
+
+services:
+  app_proxy:
+    environment:
+      # Format: <app-id>_<docker-service-name>_1
+      APP_HOST: tenon-joinr-backup_app_1
+      APP_PORT: 4931
+      # No PROXY_AUTH_WHITELIST. Umbrel's session authentication stays in front of EVERY path,
+      # including the archive downloads — the whole point of this app is that the archives are the
+      # business, and the one carve-out a sibling app in this store makes (a workshop TV) has no
+      # equivalent here.
+
+  app:
+    image: ghcr.io/devcal1/tenon-joinr-backup:1.0.0@sha256:fb92a93b9fee4f8773a45a3e806b34e4f18182cfb68f7ce74c7620f2deec0488
+    restart: on-failure
+    # uid 1000, stated rather than inherited from whatever the base image happens to define, and
+    # the same thing Umbrel's own app_proxy service does. It is what `app-data` directories are
+    # owned by on this device (read off the box, not assumed), so the four files
+    # umbrel-backup-secrets.cmd writes as `umbrel` over SSH are readable here, and the archives
+    # this writes stay readable by that account.
+    #   The evidence that this matters is one directory over in `app-data`: a sibling app's two
+    # bind-mount targets that were NOT shipped in its store repository are owned by root, because
+    # Docker creates a missing bind source as root. Hence the `data/` skeleton beside this file —
+    # umbreld rsyncs it into `app-data` at install as uid 1000 (dropping the `.gitkeep`s), so
+    # every directory exists, owned correctly, before this container first starts.
+    user: '1000:1000'
+    # A SUBDIRECTORY of APP_DATA_DIR, never APP_DATA_DIR itself — the linter makes that an error
+    # (`persistence.app_data_root`), because app_proxy already bind-mounts the parent read-only
+    # and umbreld writes the app's own manifest into it.
+    #   Under ${APP_DATA_DIR}/data the app keeps: secrets/ (four one-line files, placed over SSH
+    # by umbrel-backup-secrets.cmd and read at the start of every run, so a rotation needs no
+    # restart), archives/ (the .7z files and backups.log), state/ and staging/.
+    #   NOTE, and it is stated because it is not obvious: app_proxy mounts ${APP_DATA_DIR} — the
+    # PARENT of this — read-only, so Umbrel's own proxy container can read secrets/. That is true
+    # of every Umbrel app that keeps a credential in its data directory and there is no way around
+    # it inside the packaging standard. It is in T8.6's risk table.
+    volumes:
+      - ${APP_DATA_DIR}/data:/data
+    # Nothing is published. app_proxy is the only way in, which is what keeps Umbrel's session
+    # authentication in front of the page and the downloads.

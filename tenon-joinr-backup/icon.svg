@@ -1,0 +1,14 @@
+<!-- The app tile in the Umbrel dashboard. Joinr's one accent (#17C8A0) on the brand's ink ground,
+     per docs/brand/TH_Cabinets_Style_Guide.pdf. A vault door: the thing this app is. -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" width="256" height="256" role="img" aria-label="Joinr Backup">
+  <rect width="256" height="256" rx="56" fill="#101019"/>
+  <rect x="44" y="52" width="168" height="152" rx="16" fill="none" stroke="#17C8A0" stroke-width="10"/>
+  <circle cx="128" cy="128" r="42" fill="none" stroke="#17C8A0" stroke-width="10"/>
+  <circle cx="128" cy="128" r="12" fill="#17C8A0"/>
+  <g stroke="#17C8A0" stroke-width="10" stroke-linecap="round">
+    <line x1="128" y1="70" x2="128" y2="86"/>
+    <line x1="128" y1="170" x2="128" y2="186"/>
+    <line x1="70" y1="128" x2="86" y2="128"/>
+    <line x1="170" y1="128" x2="186" y2="128"/>
+  </g>
+</svg>

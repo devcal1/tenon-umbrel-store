@@ -1,0 +1,17 @@
+# The `tenon` Umbrel community app store.
+#
+# THIS `id` IS PERMANENT. Umbrel prefixes every app id in a store with the store's id, and it
+# treats a change of id as uninstall-and-reinstall — which deletes the app's data directory with
+# no prompt (`fse.remove` in umbreld's `Apps.uninstall`, read off umbrelOS 1.7.4's own source on
+# 11 Sep 2026). For an app whose data directory IS the backups, renaming this line would destroy
+# every archive on the server. Do not.
+#
+# `tenon` rather than `joinr` because Tenon is the holding company and Joinr is one of its
+# products: a store that may one day hold other custom apps for the business should not be named
+# after one of them. It is the same reasoning that keeps the repository, the `@tenon/*` package
+# scope and the Vercel and Supabase project names on `tenon` while every word a customer reads
+# says Joinr.
+#
+# The `name` below is display text and may be changed freely.
+id: 'tenon'
+name: 'Tenon'

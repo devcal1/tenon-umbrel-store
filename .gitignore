@@ -1,0 +1,11 @@
+# The app's runtime data directory. Umbrel rsyncs this tree into `app-data` at install (dropping
+# the .gitkeep files), which is how the bind-mount source exists and is owned by the right uid
+# before the container first starts — Docker would otherwise create it as root.
+#
+# The DIRECTORIES are tracked, through their .gitkeep files. Nothing else under here ever may be:
+# on a machine that has actually run the app, `archives/` holds encrypted copies of every
+# customer's quotes and `secrets/` holds the production database password. This repository is
+# public.
+tenon-joinr-backup/data/**
+!tenon-joinr-backup/data/**/
+!tenon-joinr-backup/data/**/.gitkeep
