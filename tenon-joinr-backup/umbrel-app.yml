@@ -20,9 +20,12 @@ manifestVersion: 1
 id: tenon-joinr-backup
 category: files
 name: Joinr Backup
-version: '1.0.0'
+version: '1.0.1'
 tagline: Weekly encrypted backup of the Joinr database and the files customers uploaded
-icon: https://raw.githubusercontent.com/devcal1/tenon-umbrel-store/master/tenon-joinr-backup/icon.svg
+# `main`, not `master` — that is this repository's default branch, and a raw.githubusercontent URL
+# names a branch rather than following the default. The first version said `master`, copied from a
+# sibling store that uses it, and would have 404'd into a blank tile.
+icon: https://raw.githubusercontent.com/devcal1/tenon-umbrel-store/main/tenon-joinr-backup/icon.svg
 description: >-
   Takes a weekly encrypted copy of the Joinr production database and of every file customers have
   uploaded to it, and keeps the newest sixteen on this server.
@@ -53,9 +56,17 @@ description: >-
   the finished archive is opened again with its own passphrase. An archive that fails either check
   is parked under a name this app will never count as a backup, and the page says so.
 releaseNotes: >-
-  First release. Takes over the weekly off-platform backup from a Windows Scheduled Task on a
-  laptop, so that a job the business cannot afford to miss no longer depends on one machine being
-  awake. It keeps its own calendar and catches up on a backup missed while the server was off.
+  **Take a backup now** works straight after a failed one.
+
+
+  It used to refuse for ten minutes after ANY run, which meant that the most useful moment to
+  press it — you have just fixed whatever was stopping the backup, and want to see it work — was
+  exactly the moment it said no. It now counts only backups that actually succeeded. A
+  double-click is still one backup, because a second press while one is running is refused on its
+  own.
+
+
+  Also fixes the app's icon, which pointed at a branch that does not exist.
 developer: Tenon
 website: https://joinr.com.au
 dependencies: []
