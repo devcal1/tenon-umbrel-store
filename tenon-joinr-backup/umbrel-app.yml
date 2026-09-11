@@ -20,7 +20,7 @@ manifestVersion: 1
 id: tenon-joinr-backup
 category: files
 name: Joinr Backup
-version: '1.0.1'
+version: '1.0.2'
 tagline: Weekly encrypted backup of the Joinr database and the files customers uploaded
 # `main`, not `master` — that is this repository's default branch, and a raw.githubusercontent URL
 # names a branch rather than following the default. The first version said `master`, copied from a
@@ -56,17 +56,23 @@ description: >-
   the finished archive is opened again with its own passphrase. An archive that fails either check
   is parked under a name this app will never count as a backup, and the page says so.
 releaseNotes: >-
-  **Take a backup now** works straight after a failed one.
+  The app's page has been rebuilt to look like the Joinr admin console.
 
 
-  It used to refuse for ten minutes after ANY run, which meant that the most useful moment to
-  press it — you have just fixed whatever was stopping the backup, and want to see it work — was
-  exactly the moment it said no. It now counts only backups that actually succeeded. A
-  double-click is still one backup, because a second press while one is running is refused on its
-  own.
+  Same page, same facts, same two buttons — laid out properly. There is a sidebar that jumps you
+  straight to the bit you want, a status panel at the top that tells you in one line whether the
+  backup is up to date, and four figures across the page: when the last backup ran, when the next
+  one is due, how many archives are being kept and how much room is left on the disk. The
+  archives and the download buttons are easier to hit on a phone, which is where the monthly
+  off-site copy usually gets made.
 
 
-  Also fixes the app's icon, which pointed at a branch that does not exist.
+  Nothing about what the page shows has changed. It still never prints a password, a key, a
+  passphrase or a customer's name — a settings file is either present or missing and that is all
+  it will ever say about one — and the "Take a backup now" button does exactly what it did.
+
+
+  ⚠️ **UNINSTALLING THIS APP STILL DELETES EVERY BACKUP IT HOLDS.** Updating does not.
 developer: Tenon
 website: https://joinr.com.au
 dependencies: []
