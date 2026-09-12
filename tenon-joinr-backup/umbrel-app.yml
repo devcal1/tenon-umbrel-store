@@ -20,7 +20,7 @@ manifestVersion: 1
 id: tenon-joinr-backup
 category: files
 name: Joinr Backup
-version: '1.0.2'
+version: '1.0.3'
 tagline: Weekly encrypted backup of the Joinr database and the files customers uploaded
 # `main`, not `master` — that is this repository's default branch, and a raw.githubusercontent URL
 # names a branch rather than following the default. The first version said `master`, copied from a
@@ -56,20 +56,20 @@ description: >-
   the finished archive is opened again with its own passphrase. An archive that fails either check
   is parked under a name this app will never count as a backup, and the page says so.
 releaseNotes: >-
-  The app's page has been rebuilt to look like the Joinr admin console.
+  The app's page now carries the Joinr logo.
 
 
-  Same page, same facts, same two buttons — laid out properly. There is a sidebar that jumps you
-  straight to the bit you want, a status panel at the top that tells you in one line whether the
-  backup is up to date, and four figures across the page: when the last backup ran, when the next
-  one is due, how many archives are being kept and how much room is left on the disk. The
-  archives and the download buttons are easier to hit on a phone, which is where the monthly
-  off-site copy usually gets made.
+  That is the whole change: the real wordmark at the head of the page's sidebar and above the
+  three refusal pages, in place of the word set in bold. Nothing else moved — the same layout,
+  the same figures, the same two buttons, the same sentences.
 
 
-  Nothing about what the page shows has changed. It still never prints a password, a key, a
-  passphrase or a customer's name — a settings file is either present or missing and that is all
-  it will ever say about one — and the "Take a backup now" button does exactly what it did.
+  The dashboard tile is deliberately unchanged. In a grid of app icons a tile's job is to say
+  what the app IS, and the vault door says "backups" where a logo would only say "Joinr".
+
+
+  Nothing about the backup itself has changed, and nothing about what the page shows: it still
+  never prints a password, a key, a passphrase or a customer's name.
 
 
   ⚠️ **UNINSTALLING THIS APP STILL DELETES EVERY BACKUP IT HOLDS.** Updating does not.
