@@ -20,7 +20,7 @@ manifestVersion: 1
 id: tenon-joinr-backup
 category: files
 name: Joinr Backup
-version: '1.0.3'
+version: '1.0.4'
 tagline: Weekly encrypted backup of the Joinr database and the files customers uploaded
 # `main`, not `master` — that is this repository's default branch, and a raw.githubusercontent URL
 # names a branch rather than following the default. The first version said `master`, copied from a
@@ -56,16 +56,20 @@ description: >-
   the finished archive is opened again with its own passphrase. An archive that fails either check
   is parked under a name this app will never count as a backup, and the page says so.
 releaseNotes: >-
-  The app's page now carries the Joinr logo.
+  Two changes to the app's page, neither one to the backup itself.
 
 
-  That is the whole change: the real wordmark at the head of the page's sidebar and above the
-  three refusal pages, in place of the word set in bold. Nothing else moved — the same layout,
-  the same figures, the same two buttons, the same sentences.
+  It has a browser-tab icon now — the Joinr dot, where before it had none and a browser drew its
+  own default sheet of paper on the one tab this app ever asks anyone to keep open. The heading
+  reads "Joinr backup" the same way, with the dot standing in for the word, and the sidebar gained
+  two links straight out to the Joinr app and the admin console.
 
 
-  The dashboard tile is deliberately unchanged. In a grid of app icons a tile's job is to say
-  what the app IS, and the vault door says "backups" where a logo would only say "Joinr".
+  The page also has a second screen now: Settings, reached from a new pair of links in the
+  sidebar. It holds one thing — a text-colour slider that recolours the page's headings and
+  figures. It does NOT recolour ordinary paragraphs, the log, or a status word like "Lost", which
+  keep the colours they have always had, whatever the slider says. The choice is kept in this
+  browser only: nobody else's screen changes, and it never leaves this device.
 
 
   Nothing about the backup itself has changed, and nothing about what the page shows: it still
