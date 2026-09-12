@@ -21,7 +21,7 @@ services:
       # equivalent here.
 
   app:
-    image: ghcr.io/devcal1/tenon-joinr-backup:1.0.4@sha256:c1dae62dbfba0acaf143108742e74381512cf6957a1837c7c4c54f5f52664154
+    image: ghcr.io/devcal1/tenon-joinr-backup:1.0.5@sha256:d280b1002b944854040e1a07845b393d1a2cd7e7392c8c2f07ea2b9f721a85d2
     restart: on-failure
     # uid 1000, stated rather than inherited from whatever the base image happens to define, and
     # the same thing Umbrel's own app_proxy service does. It is what `app-data` directories are

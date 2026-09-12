@@ -20,7 +20,7 @@ manifestVersion: 1
 id: tenon-joinr-backup
 category: files
 name: Joinr Backup
-version: '1.0.4'
+version: '1.0.5'
 tagline: Weekly encrypted backup of the Joinr database and the files customers uploaded
 # `main`, not `master` — that is this repository's default branch, and a raw.githubusercontent URL
 # names a branch rather than following the default. The first version said `master`, copied from a
@@ -56,20 +56,23 @@ description: >-
   the finished archive is opened again with its own passphrase. An archive that fails either check
   is parked under a name this app will never count as a backup, and the page says so.
 releaseNotes: >-
-  Two changes to the app's page, neither one to the backup itself.
+  One change, to the Settings screen added in 1.0.4, and none at all to the backup.
 
 
-  It has a browser-tab icon now — the Joinr dot, where before it had none and a browser drew its
-  own default sheet of paper on the one tab this app ever asks anyone to keep open. The heading
-  reads "Joinr backup" the same way, with the dot standing in for the word, and the sidebar gained
-  two links straight out to the Joinr app and the admin console.
+  The text-colour slider offered five fixed colours. It now offers the whole colour wheel: one
+  slider for the colour and a second for how strong it is, with the four Joinr colours kept as
+  buttons beside them so they are still one click away. Sliding strength all the way down is
+  Default — the colours this page has always had.
 
 
-  The page also has a second screen now: Settings, reached from a new pair of links in the
-  sidebar. It holds one thing — a text-colour slider that recolours the page's headings and
-  figures. It does NOT recolour ordinary paragraphs, the log, or a status word like "Lost", which
-  keep the colours they have always had, whatever the slider says. The choice is kept in this
-  browser only: nobody else's screen changes, and it never leaves this device.
+  Every colour it can produce has been checked to stay comfortably readable on this page's dark
+  background, so there is no setting here that makes the page hard to read.
+
+
+  Your previous choice is not carried over: the slider starts at Default and a new choice sticks
+  from then on. It is still kept in this browser only — nobody else's screen changes, and it never
+  leaves this device. It still does NOT recolour ordinary paragraphs, the log, or a status word
+  like "Lost".
 
 
   Nothing about the backup itself has changed, and nothing about what the page shows: it still
