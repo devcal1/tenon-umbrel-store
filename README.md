@@ -38,6 +38,11 @@ They are put there over SSH, by a helper that runs on the operator's own machine
 password travels through a browser or a chat window. Until they are there, the app's page says
 which are missing and takes no backup.
 
+A fifth value is optional: the ping URL of a dead man's switch. Given one, the app pings it when a
+run starts and again when the run finishes, so that a server which has quietly stopped backing up
+is noticed by something other than this page. Without one the app behaves exactly as it always
+has, and nothing outside the server is watching it.
+
 ## What is in this repository, and what is not
 
 ```

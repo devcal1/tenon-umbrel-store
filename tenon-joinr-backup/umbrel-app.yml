@@ -20,7 +20,7 @@ manifestVersion: 1
 id: tenon-joinr-backup
 category: files
 name: Joinr Backup
-version: '1.0.5'
+version: '1.0.6'
 tagline: Weekly encrypted backup of the Joinr database and the files customers uploaded
 # `main`, not `master` — that is this repository's default branch, and a raw.githubusercontent URL
 # names a branch rather than following the default. The first version said `master`, copied from a
@@ -56,27 +56,38 @@ description: >-
   the finished archive is opened again with its own passphrase. An archive that fails either check
   is parked under a name this app will never count as a backup, and the page says so.
 releaseNotes: >-
-  One change, to the Settings screen added in 1.0.4, and none at all to the backup.
+  **The backup can now tell somebody when it stops.**
 
 
-  The text-colour slider offered five fixed colours. It now offers the whole colour wheel: one
-  slider for the colour and a second for how strong it is, with the four Joinr colours kept as
-  buttons beside them so they are still one click away. Sliding strength all the way down is
-  Default — the colours this page has always had.
+  Until now the only alarm this app had was the word OVERDUE in its own browser tab, on a page
+  somebody has to remember to open. This server can only be reached from your own network, so
+  nothing outside it could ever check whether the weekly backup was still happening — and a
+  backup that quietly stops running is invisible until the day it is needed.
 
 
-  Every colour it can produce has been checked to stay comfortably readable on this page's dark
-  background, so there is no setting here that makes the page hard to read.
+  So the app now pings a monitoring service of your choosing: when a run starts, when it
+  finishes, and when it fails. If the ping stops arriving, that service raises the alarm.
 
 
-  Your previous choice is not carried over: the slider starts at Default and a new choice sticks
-  from then on. It is still kept in this browser only — nobody else's screen changes, and it never
-  leaves this device. It still does NOT recolour ordinary paragraphs, the log, or a status word
-  like "Lost".
+  **It is optional, and it is off until you set it up.** Put a ping URL in the app's settings
+  folder the same way the other credentials were placed (`umbrel-backup-secrets.cmd`), and the
+  app starts using it on its very next run. Without one, everything behaves exactly as it did
+  before.
 
 
-  Nothing about the backup itself has changed, and nothing about what the page shows: it still
-  never prints a password, a key, a passphrase or a customer's name.
+  **A ping can never change a backup.** It is sent only after the archive has been built,
+  checked, opened again with its passphrase and saved — so nothing can silence the alarm except a
+  backup that really exists. It cannot fail a run that worked, and it cannot cover up one that
+  did not: a run that failed its own checks reports a failure.
+
+
+  **The address is treated as a password, because it is one** — anyone holding it could silence
+  the alarm. It is never shown on this page, never written to the log, and never sent anywhere
+  but the monitoring service. The "This container" panel says only whether a heartbeat is set up
+  and when the last one was sent.
+
+
+  Nothing else has changed: same backup, same schedule, same archives, same way of restoring one.
 
 
   ⚠️ **UNINSTALLING THIS APP STILL DELETES EVERY BACKUP IT HOLDS.** Updating does not.
