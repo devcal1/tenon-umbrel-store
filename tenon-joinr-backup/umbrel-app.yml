@@ -20,7 +20,7 @@ manifestVersion: 1
 id: tenon-joinr-backup
 category: files
 name: Joinr Backup
-version: '1.0.6'
+version: '1.1.0'
 tagline: Weekly encrypted backup of the Joinr database and the files customers uploaded
 # `main`, not `master` — that is this repository's default branch, and a raw.githubusercontent URL
 # names a branch rather than following the default. The first version said `master`, copied from a
@@ -56,41 +56,46 @@ description: >-
   the finished archive is opened again with its own passphrase. An archive that fails either check
   is parked under a name this app will never count as a backup, and the page says so.
 releaseNotes: >-
-  **The backup can now tell somebody when it stops.**
+  **The backups now keep a copy on the NAS.**
 
 
-  Until now the only alarm this app had was the word OVERDUE in its own browser tab, on a page
-  somebody has to remember to open. This server can only be reached from your own network, so
-  nothing outside it could ever check whether the weekly backup was still happening — and a
-  backup that quietly stops running is invisible until the day it is needed.
+  Until today every backup this app makes lived on one disk, in one shed, on the same server that
+  runs everything else. A fire, a theft or a dead disk and they would all go at once — which is
+  why the archives have always been meant to leave the server, and why until now that meant
+  remembering to download one by hand.
 
 
-  So the app now pings a monitoring service of your choosing: when a run starts, when it
-  finishes, and when it fails. If the ping stops arriving, that service raises the alarm.
+  The app now copies them to the NAS by itself, straight after each weekly backup. It sends
+  whatever the NAS is missing rather than only the newest one, so a fortnight with the NAS
+  switched off is put right by the first backup after it comes back on.
 
 
-  **It is optional, and it is off until you set it up.** Put a ping URL in the app's settings
-  folder the same way the other credentials were placed (`umbrel-backup-secrets.cmd`), and the
-  app starts using it on its very next run. Without one, everything behaves exactly as it did
-  before.
+  **It is optional, and it is off until you set it up.** Put the NAS address and its password in
+  the app's settings folder the same way the other credentials were placed
+  (`umbrel-backup-secrets.cmd`), and the app starts copying on its very next run. Without them,
+  everything behaves exactly as it did before.
 
 
-  **A ping can never change a backup.** It is sent only after the archive has been built,
-  checked, opened again with its passphrase and saved — so nothing can silence the alarm except a
-  backup that really exists. It cannot fail a run that worked, and it cannot cover up one that
-  did not: a run that failed its own checks reports a failure.
+  **A failed copy can never fail a backup.** The copy happens only after the archive has been
+  built, checked, opened again with its passphrase and saved here. A NAS that is switched off,
+  full or unreachable shows up as a problem on a backup that worked — never as a backup that did
+  not.
 
 
-  **The address is treated as a password, because it is one** — anyone holding it could silence
-  the alarm. It is never shown on this page, never written to the log, and never sent anywhere
-  but the monitoring service. The "This container" panel says only whether a heartbeat is set up
-  and when the last one was sent.
+  **It only ever adds.** This app will not delete anything on the NAS, ever. It does not take
+  rsync's word for the copy either: once the archives are sent it reads the NAS's own list back
+  and counts how many really are there, at the right size, and that is what the page reports.
+
+
+  **The copy has an alarm of its own**, separate from the backup's, so "the backup has stopped"
+  and "the copy is not leaving the server" reach you as two different messages.
 
 
   Nothing else has changed: same backup, same schedule, same archives, same way of restoring one.
 
 
-  ⚠️ **UNINSTALLING THIS APP STILL DELETES EVERY BACKUP IT HOLDS.** Updating does not.
+  ⚠️ **UNINSTALLING THIS APP STILL DELETES EVERY BACKUP IT HOLDS.** Updating does not, and
+  neither touches the copies on the NAS.
 developer: Tenon
 website: https://joinr.com.au
 dependencies: []
