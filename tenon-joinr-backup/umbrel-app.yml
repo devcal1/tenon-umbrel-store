@@ -20,15 +20,15 @@ manifestVersion: 1
 id: tenon-joinr-backup
 category: files
 name: Joinr Backup
-version: '1.1.0'
+version: '1.2.0'
 tagline: Weekly encrypted backup of the Joinr database and the files customers uploaded
 # `main`, not `master` — that is this repository's default branch, and a raw.githubusercontent URL
 # names a branch rather than following the default. The first version said `master`, copied from a
 # sibling store that uses it, and would have 404'd into a blank tile.
 icon: https://raw.githubusercontent.com/devcal1/tenon-umbrel-store/main/tenon-joinr-backup/icon.svg
 description: >-
-  Takes a weekly encrypted copy of the Joinr production database and of every file customers have
-  uploaded to it, and keeps the newest sixteen on this server.
+  Takes a weekly encrypted copy of the Joinr production database and of the letterheads customers
+  have uploaded to it, and keeps the newest sixteen on this server.
 
 
   ⚠️ **UNINSTALLING THIS APP DELETES EVERY BACKUP IT HOLDS.** Umbrel removes an app's data
@@ -40,6 +40,14 @@ description: >-
   history, and the sign-in accounts with their passwords — as one `pg_dump` file, plus every
   logo, banner and terms PDF from the app's file storage, which no database backup covers. It is
   a single 7-Zip archive encrypted with AES-256, with the file names encrypted too.
+
+
+  **The files people attach to quotes are kept beside the archives, not inside them**, in a
+  folder of their own where each one is separately encrypted with the same passphrase, and they go
+  to the NAS with the archives wherever that copy is set up. They are held that way because an
+  attachment is uploaded once and never changed. Every archive lists the ones that existed when it
+  was taken and which file holds each one, so restoring everything takes an archive and that
+  folder together.
 
 
   **The passphrase cannot be recovered.** Not by Tenon, not by Umbrel, not by anybody. It belongs
@@ -56,46 +64,62 @@ description: >-
   the finished archive is opened again with its own passphrase. An archive that fails either check
   is parked under a name this app will never count as a backup, and the page says so.
 releaseNotes: >-
-  **The backups now keep a copy on the NAS.**
+  **The files people attach to quotes are now backed up.**
 
 
-  Until today every backup this app makes lived on one disk, in one shed, on the same server that
-  runs everything else. A fire, a theft or a dead disk and they would all go at once — which is
-  why the archives have always been meant to leave the server, and why until now that meant
-  remembering to download one by hand.
+  Joinr lets a shop attach a plan, a drawing or a photo to a quote. Those files are not in the
+  weekly archive. They are kept in a folder called `attachments` beside the archives, one
+  separately encrypted file per document, and — wherever the copy to the NAS is set up — they go
+  across after the archives do. Logos, banners and terms PDFs are still inside the weekly
+  archive, exactly as before.
 
 
-  The app now copies them to the NAS by itself, straight after each weekly backup. It sends
-  whatever the NAS is missing rather than only the newest one, so a fortnight with the NAS
-  switched off is put right by the first backup after it comes back on.
+  **They are kept apart because they never change.** A logo gets replaced, so a fresh copy of it
+  every week is the right thing to do. An attachment is uploaded once and then stays as it is —
+  so putting all of them inside every weekly archive would mean each week's archive growing to
+  hold every file ever attached, and the same files being sent up to the NAS again every week.
 
 
-  **It is optional, and it is off until you set it up.** Put the NAS address and its password in
-  the app's settings folder the same way the other credentials were placed
-  (`umbrel-backup-secrets.cmd`), and the app starts copying on its very next run. Without them,
-  everything behaves exactly as it did before.
+  **Nothing about a file can be read from its name.** Each one is its own small 7-Zip archive,
+  opened with the same passphrase as the backups, named after a fingerprint of what is inside it.
+  No job name, no customer name and no file name appears in the folder — and a drawing attached
+  to two quotes is stored once rather than twice.
 
 
-  **A failed copy can never fail a backup.** The copy happens only after the archive has been
-  built, checked, opened again with its passphrase and saved here. A NAS that is switched off,
-  full or unreachable shows up as a problem on a backup that worked — never as a backup that did
-  not.
+  **Nothing in that folder is ever deleted**, here or on the NAS. The archives are tidied down to
+  the newest sixteen every week, as before; the attachments folder is never tidied, so a file
+  whose quote was deleted months ago is still there. The copy is checked the same way the
+  archives are — once the files are sent, the NAS's own list is read back and counted, rather
+  than the transfer being taken at its word.
 
 
-  **It only ever adds.** This app will not delete anything on the NAS, ever. It does not take
-  rsync's word for the copy either: once the archives are sent it reads the NAS's own list back
-  and counts how many really are there, at the right size, and that is what the page reports.
+  **Restoring now takes two things: an archive and that folder.** The instructions inside every
+  archive (`README-restore.txt`) have grown to cover both: the two commands to run, and for
+  the letterheads a by-hand way through for somebody with no developer tools to hand. (An
+  attachment can be opened by hand with the passphrase, but only the command puts one back on a
+  quote.) The archive's `manifest.txt`
+  lists every attached file the backup saw and which file in the folder holds it — the archive is
+  the index, and the folder on its own is meant to be meaningless without it.
 
 
-  **The copy has an alarm of its own**, separate from the backup's, so "the backup has stopped"
-  and "the copy is not leaving the server" reach you as two different messages.
+  **A shop that has attached nothing sees nothing new on the NAS.** An empty folder sends nothing
+  and creates nothing there; the page and the log simply report zero attachments. And if this
+  server is ever short of room, the attachments alone are skipped with a sentence saying so — the
+  database and the letterheads are still backed up.
 
 
-  Nothing else has changed: same backup, same schedule, same archives, same way of restoring one.
+  The status page gains an **Attachments** row: how many attached files Joinr holds, how many
+  were new this run, and how many files the folder here holds and how big it is. The NAS line
+  now says how many of them went across.
 
 
-  ⚠️ **UNINSTALLING THIS APP STILL DELETES EVERY BACKUP IT HOLDS.** Updating does not, and
-  neither touches the copies on the NAS.
+  **There is nothing to set up.** Press Update; the app makes the folder itself, and the next
+  backup mirrors whatever has been attached.
+
+
+  ⚠️ **UNINSTALLING THIS APP STILL DELETES EVERY BACKUP IT HOLDS** — and now the attachments
+  folder with them, since it sits in the same place. Updating deletes nothing, and neither
+  touches the copies on the NAS.
 developer: Tenon
 website: https://joinr.com.au
 dependencies: []

@@ -26,22 +26,38 @@ https://github.com/devcal1/tenon-umbrel-store
 ## The app
 
 **Joinr Backup** takes a weekly encrypted copy of the [Joinr](https://joinr.com.au) production
-database and of every file customers have uploaded to it, and keeps the newest sixteen on the
-server. One 7-Zip archive per run, AES-256, file names encrypted too.
+database and of the letterheads customers have uploaded to it — logos, banners and terms PDFs —
+and keeps the newest sixteen on the server. One 7-Zip archive per run, AES-256, file names
+encrypted too.
 
-It has a small status page — the last run, the next one, the archives with a download button, and
-a "Take a backup now" button — behind Umbrel's own login, which is how the monthly off-site copy
-gets made.
+The files customers attach to quotes are kept beside the archives instead of inside them, in a
+folder of separately encrypted files, because an attachment is uploaded once and never changed
+where a letterhead is replaced in place. Each archive lists the attachments that existed when it
+was taken and which file holds each one, so a full restore takes an archive and that folder
+together.
+
+It has a small status page — the last run, the next one, what each run took, the archives with a
+download button, and a "Take a backup now" button — behind Umbrel's own login.
 
 It needs four credentials placed in its data directory on the server before it can do anything.
 They are put there over SSH, by a helper that runs on the operator's own machine, so that no
 password travels through a browser or a chat window. Until they are there, the app's page says
 which are missing and takes no backup.
 
-A fifth value is optional: the ping URL of a dead man's switch. Given one, the app pings it when a
-run starts and again when the run finishes, so that a server which has quietly stopped backing up
-is noticed by something other than this page. Without one the app behaves exactly as it always
-has, and nothing outside the server is watching it.
+Four further values are optional, placed the same way, and each one is off until it is there:
+
+- `heartbeat-url`, the ping URL of a dead man's switch. Given one, the app pings it when a run
+  starts and again when the run finishes, so that a server which has quietly stopped backing up is
+  noticed by something other than this page.
+- `nas-url` and `nas-password`, the address of an rsync folder to copy the finished archives and
+  the attachments into, and its password. With both, every archive the far end is missing is sent
+  after each run — so a fortnight with that machine switched off is put right by the first backup
+  after it comes back on. Nothing there is ever deleted by this app.
+- `nas-heartbeat-url`, a second dead man's switch for the copy alone, so that "the backup has
+  stopped" and "the copy is not leaving the server" arrive as two different alarms.
+
+With none of them the app behaves exactly as it did before they existed: it still takes and checks
+its weekly backup, and nothing outside the server is watching it or holding a copy.
 
 ## What is in this repository, and what is not
 
