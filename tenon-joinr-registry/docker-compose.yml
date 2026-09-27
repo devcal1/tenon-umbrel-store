@@ -1,0 +1,38 @@
+# The Distribution registry, pinned by tag AND digest (Docker Hub's index digest for 2.8.3, the
+# newest 2.x; the 3.x line is not used). A bump changes both parts and `version:` in
+# umbrel-app.yml.
+#
+# NO app_proxy: this app serves nothing to the LAN. umbreld adds the proxy only when the compose
+# defines it, so a UI-less app is valid.
+
+version: '3.7'
+
+services:
+  registry:
+    image: registry:2.8.3@sha256:a3d8aaa63ed8681a604f1dea0aa03f100d5895b6a58ace528858a7b332415373
+    restart: on-failure
+    # uid 1000, the owner of app-data on this device: the `data/` skeleton beside this file
+    # becomes the storage folder, owned by uid 1000, before the first start.
+    user: '1000:1000'
+    # LOOPBACK ONLY. The registry has no authentication; only processes on this server's own
+    # network stack (the Docker daemon pulling for Umbrel, `docker push` over SSH, and any
+    # host-network container) can reach it. Docker treats 127.0.0.0/8 as an insecure (plain HTTP)
+    # registry by default, so no TLS is needed.
+    ports:
+      - '127.0.0.1:4930:5000'
+    # NOT on umbrel_main_network (every app's default network): on its own bridge, other apps'
+    # containers cannot reach registry:5000 directly. The loopback publish above is unaffected
+    # (the daemon pulls through the host port).
+    networks:
+      - registry
+    volumes:
+      - ${APP_DATA_DIR}/data:/var/lib/registry
+    environment:
+      # Deleting through the API stays OFF. The loopback API is unauthenticated and reachable by
+      # any host-network container; deleting a pinned manifest would break Joinr Finance's next
+      # Update or a reinstall. Offline garbage collection works without it.
+      REGISTRY_STORAGE_DELETE_ENABLED: 'false'
+
+networks:
+  # A private bridge; umbreld prunes networks at boot and compose re-creates it at start.
+  registry: {}

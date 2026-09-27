@@ -9,3 +9,13 @@
 tenon-joinr-backup/data/**
 !tenon-joinr-backup/data/**/
 !tenon-joinr-backup/data/**/.gitkeep
+
+# The same rule for Joinr Finance, whose data directory on a machine that runs it holds the
+# owner's finance database and every backup of it, and for Joinr Registry, whose data directory
+# holds the stored images. Directories and their .gitkeep files only.
+tenon-joinr-finance/data/**
+!tenon-joinr-finance/data/**/
+!tenon-joinr-finance/data/**/.gitkeep
+tenon-joinr-registry/data/**
+!tenon-joinr-registry/data/**/
+!tenon-joinr-registry/data/**/.gitkeep

@@ -1,0 +1,63 @@
+# THIS `id` IS PERMANENT — see umbrel-app-store.yml. Umbrel treats a change of app id (or of the
+# store id it is prefixed with) as uninstall-and-reinstall, and uninstall deletes this app's data
+# directory without asking. That directory holds the stored images.
+#
+# EVERY REQUIRED FIELD IS FILLED, as in tenon-joinr-backup/umbrel-app.yml (the required set is
+# `REQUIRED_MANIFEST_FIELDS` in getumbrel/umbrel-apps' `.tools/lint-apps.mjs`).
+#
+# WHY THIS APP EXISTS: Joinr Finance's image is built on this Umbrel and pulled from a registry on
+# its loopback. umbreld removes every container that is not an app's at each start, so a plain
+# registry container would be gone after every reboot, and an Update clicked then leaves Joinr
+# Finance stopped. As an app, umbreld starts it at every boot.
+#
+# `version:` is the registry image's version and moves only when docker-compose.yml's image does.
+manifestVersion: 1
+id: tenon-joinr-registry
+category: developer
+name: Joinr Registry
+version: '2.8.3'
+tagline: Host-only image registry that the self-built Joinr apps install from
+# `main`, as tenon-joinr-backup's comment explains: a raw.githubusercontent URL names a branch.
+icon: https://raw.githubusercontent.com/devcal1/tenon-umbrel-store/main/tenon-joinr-registry/icon.svg
+description: >-
+  A private Docker image registry that listens on this server's loopback only (127.0.0.1:4930).
+  Joinr Finance's image is built on this server and stored here, and Umbrel installs and updates
+  Joinr Finance from it. Nothing outside this server can reach it, and other apps' containers
+  cannot reach it either (it runs on its own private network).
+
+
+  **Install this app before Joinr Finance, and keep it running.** Installing or updating Joinr
+  Finance while this app is stopped fails, and a failed update leaves Joinr Finance stopped.
+
+
+  **It has no web page.** The Open button leads nowhere; that is expected. It is used from the
+  command line (`pnpm umbrel:registry status` in the joinr-fin repository).
+
+
+  ⚠️ **UNINSTALLING THIS APP DELETES THE STORED IMAGES.** Joinr Finance keeps running (its image
+  is also kept by Docker), but its next Update or a reinstall fails until a new version is
+  released. Deleting images through the registry's API is switched off, so a pinned version is
+  never lost by accident.
+releaseNotes: >-
+  **2.8.3: the first release.** The Distribution registry 2.8.3, pinned by digest, on
+  127.0.0.1:4930 only.
+developer: Tenon
+website: https://github.com/distribution/distribution
+dependencies: []
+repo: https://github.com/devcal1/tenon-umbrel-store
+support: https://github.com/devcal1/tenon-umbrel-store/issues
+# The host-only registry port. Declared here so no other app on this device can take it; there is
+# no app_proxy, so Umbrel publishes nothing on it (the compose binds 127.0.0.1 only). Checked on
+# 27 Sep 2026 against every app manifest of every app store on this device and the host's
+# listeners: 4930 was free.
+port: 4930
+gallery: []
+path: ''
+defaultUsername: ''
+defaultPassword: ''
+submitter: Tenon
+submission: https://github.com/devcal1/tenon-umbrel-store
+# The images are rebuildable from the joinr-fin repository and large: umbrelOS's own Backups skip
+# them.
+backupIgnore:
+  - data/*
