@@ -1,0 +1,90 @@
+# THIS `id` IS PERMANENT — see umbrel-app-store.yml. Umbrel treats a change of app id (or of the
+# store id it is prefixed with) as uninstall-and-reinstall, and uninstall deletes this app's data
+# directory without asking. That directory holds the database AND every backup of it.
+#
+# EVERY REQUIRED FIELD IS FILLED, as in tenon-joinr-backup/umbrel-app.yml (the required set is
+# `REQUIRED_MANIFEST_FIELDS` in getumbrel/umbrel-apps' `.tools/lint-apps.mjs`): manifestVersion,
+# id, category, name, version, tagline, description, developer, website, dependencies, repo,
+# support, port, gallery, path, submitter, submission.
+#
+# `manifestVersion: 1`: no lifecycle hooks. The app keeps its own calendar inside the container
+# (the 23:00 month-end record and the 02:30 nightly backup).
+#
+# BUMP `version:` ON EVERY IMAGE CHANGE. Umbrel offers an update only when this field differs from
+# the installed one. `pnpm umbrel:release` in the joinr-fin repository writes this line and the
+# image line of docker-compose.yml together, and refuses a new image without a new version. It is
+# the same version the app shows in its footer and in Settings → About.
+manifestVersion: 1
+id: tenon-joinr-finance
+category: finance
+name: Joinr Finance
+version: '1.0.0'
+tagline: 'Personal wealth tracker: net worth, investments, cash flow, super and FIRE'
+# `main`, as tenon-joinr-backup's comment explains: a raw.githubusercontent URL names a branch.
+icon: https://raw.githubusercontent.com/devcal1/tenon-umbrel-store/main/tenon-joinr-finance/icon.svg
+description: >-
+  A self-hosted rebuild of a personal-wealth spreadsheet: net worth, investments, cash and
+  budget, side income and dividends, super, property and loans, the monthly history, and a FIRE
+  planner. One small web app with its own database, on this server.
+
+
+  ⚠️ **UNINSTALLING THIS APP DELETES ITS DATABASE AND EVERY BACKUP OF IT.** Umbrel removes an
+  app's data directory when the app is uninstalled, without asking, and this app keeps both the
+  database and its backups there. Before you uninstall, download the newest backup from
+  Settings → Backups, and keep a copy somewhere that is not this server.
+
+
+  **Backups:** every night at 02:30 the app takes a copy of its database and checks it before
+  keeping it. It keeps the newest copy of each of the last 14 days it ran and of each of the last
+  12 months, plus copies taken by hand ("Back up now"), before an import, before a restore and
+  before an update. Settings → Backups lists them with a download button.
+
+
+  **First run:** open the Import page and upload the workbook export. A dry run shows the
+  reconciliation first; nothing is written until you confirm.
+
+
+  **Time zone:** the month-end record (23:00) and the nightly backup (02:30) use the server time
+  zone, `TZ` in this app's docker-compose.yml.
+
+
+  **Access:** the app has no login of its own. Umbrel's login stays in front of every page, the
+  API and the backup downloads, and the app sits on a private Docker network that only Umbrel's
+  app proxy joins, so other apps on this server cannot call it directly.
+
+
+  **Install the Joinr Registry app first.** This app's image is built on this server and served
+  to Umbrel by that app; Install and Update fail while it is stopped.
+releaseNotes: >-
+  **1.0.0: the first release on the Umbrel.** Every page of the spreadsheet rebuild: Net Worth,
+  Investments, Cash, Budget, Side Income, Dividends, Other Assets, Super, Property, History and
+  FIRE, with live prices, the workbook import and reconciliation, the automatic month-end record,
+  and verified nightly backups with a download on the Settings page.
+developer: Tenon
+website: https://github.com/devcal1/joinr-fin
+dependencies: []
+repo: https://github.com/devcal1/joinr-fin
+support: https://github.com/devcal1/joinr-fin/issues
+# Checked on 27 Sep 2026 against every `port:` in every app manifest of every app store on this
+# device and against the host's TCP listeners: 4932 was free (4930 is the Joinr Registry app,
+# 4931 Joinr Backup). The stores refresh every few minutes, so `pnpm umbrel:release` and
+# `pnpm umbrel:status` re-check it before every release.
+port: 4932
+gallery: []
+path: ''
+defaultUsername: ''
+defaultPassword: ''
+submitter: Tenon
+# As tenon-joinr-backup: a community app has no submission pull request, so this names the
+# repository the app is published from.
+submission: https://github.com/devcal1/tenon-umbrel-store
+# umbrelOS's own Backups (Kopia snapshots of the app-data folder, taken while the app runs) skip
+# these: the live database's shared-memory file, and every hidden temporary (backup partials,
+# restore staging and upload files, unverified set-asides). A snapshot of the live finance.db and
+# its -wal taken while the app writes may be inconsistent: after an Umbrel-level restore, restore
+# from the app's own verified copy in data/backups/ with the restore CLI (joinr-fin's
+# docs/deploy/RUNBOOK.md, "Restore").
+backupIgnore:
+  - data/finance.db-shm
+  - data/.*
+  - data/backups/.*

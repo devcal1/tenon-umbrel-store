@@ -1,0 +1,76 @@
+# THE IMAGE IS PINNED BY TAG **AND** DIGEST, as tenon-joinr-backup's is. The tag is the app
+# version (the same as `version:` in umbrel-app.yml); the digest is exactly what code runs.
+#
+# WHERE THE IMAGE COMES FROM: not ghcr. It is built on this Umbrel from the public joinr-fin
+# repository and pushed to a registry that listens on the Umbrel's loopback only (127.0.0.1:4930),
+# served by the Joinr Registry app in this store. umbreld pulls every image at install and at
+# update, so an image that exists only after a local `docker build` could not install; a loopback
+# registry is plain HTTP by Docker's default (127.0.0.0/8 is an insecure registry), and nothing
+# outside the Umbrel can reach it.
+#
+# THE JOINR REGISTRY APP MUST BE RUNNING BEFORE YOU CLICK INSTALL OR UPDATE. An Update stops this
+# app and bumps its manifest before it pulls: with the registry down the pull fails and the app is
+# left stopped, with no Update offered to retry. `pnpm umbrel:status` (joinr-fin) prints "Safe to
+# click Update" only when the digest below is in the registry.
+#
+# `pnpm umbrel:release` writes the image line below and `version:` in umbrel-app.yml together.
+# Until the first release the digest is 64 zeros, so an install fails loudly instead of running
+# something unknown.
+
+version: '3.7'
+
+services:
+  app_proxy:
+    environment:
+      # Format: <app-id>_<docker-service-name>_1
+      APP_HOST: tenon-joinr-finance_app_1
+      # The port the app listens on inside its container.
+      APP_PORT: 3001
+      # No PROXY_AUTH_WHITELIST: Umbrel's login stays in front of every path, the API and the
+      # backup downloads included. The app has no login of its own.
+    networks:
+      # umbrel_main_network: Umbrel's auth service and the way in from the LAN.
+      - default
+      # The private network below: the only way to reach the app.
+      - finance
+
+  app:
+    image: 127.0.0.1:4930/joinr-finance:1.0.0@sha256:c6f39d31d539b6d7316f9285a303ed3b62d7b51374d3bb143ef1538b71e3c26c
+    restart: on-failure
+    # A real init as PID 1, so SIGTERM reaches Node and the server closes SQLite cleanly.
+    init: true
+    # Time for a backup or a price write in flight to finish before Docker kills the process.
+    stop_grace_period: 30s
+    # uid 1000: what app-data directories are owned by on this device, and the image's `node`
+    # user. The `data/` skeleton beside this file is rsynced into app-data at install as uid 1000
+    # (dropping the .gitkeep files), so /data and /data/backups exist, owned correctly, before the
+    # first start; Docker would otherwise create a missing bind source as root.
+    user: '1000:1000'
+    environment:
+      # D114: the server's zone decides the 23:00 month-end record and the 02:30 nightly backup.
+      TZ: Australia/Melbourne
+      # The write guard accepts a browser's Origin on this port (the manifest `port:`), whatever
+      # Host header the app proxy passes on.
+      PUBLIC_PORT: '4932'
+      # Everything else is the image's default: NODE_ENV=production, PORT=3001, DATA_DIR=/data,
+      # live market data, nightly backups on (no NIGHTLY_BACKUPS here), and AUTO_RECORD unset so
+      # the Settings page decides. The image has its own HEALTHCHECK (GET /api/health).
+    # A SUBDIRECTORY of APP_DATA_DIR, never APP_DATA_DIR itself (the linter's
+    # `persistence.app_data_root`: app_proxy mounts the parent read-only). Under it: finance.db,
+    # backups/ (the verified copies) and, at the first import, import-corrections.json.
+    volumes:
+      - ${APP_DATA_DIR}/data:/data
+    # NOT on umbrel_main_network. Every Umbrel app's default network is that one shared network,
+    # so without this any container of any installed app could call the API directly, with no
+    # Umbrel session, and download every backup. Only app_proxy (behind Umbrel's login) joins
+    # `finance`. The bridge keeps internet access for market prices.
+    #   If app_proxy ever answers 502 because it cannot reach the app over this network, the
+    # fallback is to drop both `networks` blocks in a compose-only release and accept the risk
+    # (documented in joinr-fin's docs/deploy/RUNBOOK.md).
+    networks:
+      - finance
+    # Nothing is published: app_proxy is the only way in.
+
+networks:
+  # A private bridge; umbreld prunes networks at boot and compose re-creates it at start.
+  finance: {}
