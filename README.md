@@ -93,6 +93,10 @@ planner, with its own SQLite database in the app's data directory. Its source is
   hand, before an import, before a restore and before an update. Settings → Backups lists them
   with a download button. ⚠️ They live in the app's data directory, so uninstalling the app
   deletes them (see above).
+- **Copy to the NAS (optional):** every Sunday at 03:00 the app copies every backup it keeps to
+  an rsync module on a NAS, only ever adding files, and proves each copy by listing the NAS back.
+  It is off until its two files (the NAS address and password) are placed in the data directory
+  over SSH with joinr-fin's `pnpm umbrel:nas-secrets` helper; umbrelOS Backups skip them.
 - **Access:** no login of its own; Umbrel's login stays in front of every path. The app sits on a
   private Docker network that only Umbrel's app proxy joins, so other apps on the server cannot
   call it directly.

@@ -35,7 +35,7 @@ services:
       - finance
 
   app:
-    image: 127.0.0.1:4930/joinr-finance:1.0.0@sha256:c6f39d31d539b6d7316f9285a303ed3b62d7b51374d3bb143ef1538b71e3c26c
+    image: 127.0.0.1:4930/joinr-finance:1.1.0@sha256:5f8bf817d6a7e9d90905ebdd728d43da433148f2341801ed44a29f33f3915c24
     restart: on-failure
     # A real init as PID 1, so SIGTERM reaches Node and the server closes SQLite cleanly.
     init: true
@@ -53,17 +53,22 @@ services:
       # Host header the app proxy passes on.
       PUBLIC_PORT: '4932'
       # Everything else is the image's default: NODE_ENV=production, PORT=3001, DATA_DIR=/data,
-      # live market data, nightly backups on (no NIGHTLY_BACKUPS here), and AUTO_RECORD unset so
-      # the Settings page decides. The image has its own HEALTHCHECK (GET /api/health).
+      # live market data, nightly backups on (no NIGHTLY_BACKUPS here), the weekly copy to the NAS
+      # scheduled (it does nothing until its files exist), and AUTO_RECORD unset so the Settings
+      # page decides. The image has its own HEALTHCHECK (GET /api/health).
     # A SUBDIRECTORY of APP_DATA_DIR, never APP_DATA_DIR itself (the linter's
     # `persistence.app_data_root`: app_proxy mounts the parent read-only). Under it: finance.db,
-    # backups/ (the verified copies) and, at the first import, import-corrections.json.
+    # backups/ (the verified copies) and, at the first import, import-corrections.json. The NAS
+    # copy's two files (nas-url, nas-password) live in data/secrets/, placed over SSH by
+    # joinr-fin's `pnpm umbrel:nas-secrets` helper, never by this repository (it is public).
     volumes:
       - ${APP_DATA_DIR}/data:/data
     # NOT on umbrel_main_network. Every Umbrel app's default network is that one shared network,
     # so without this any container of any installed app could call the API directly, with no
     # Umbrel session, and download every backup. Only app_proxy (behind Umbrel's login) joins
-    # `finance`. The bridge keeps internet access for market prices.
+    # `finance`. The bridge keeps internet access for market prices, and reaches the NAS for the
+    # weekly copy over the Umbrel's own Tailscale (the address in nas-url is the NAS's Tailscale IP:
+    # tailnet names do not resolve inside the container).
     #   If app_proxy ever answers 502 because it cannot reach the app over this network, the
     # fallback is to drop both `networks` blocks in a compose-only release and accept the risk
     # (documented in joinr-fin's docs/deploy/RUNBOOK.md).

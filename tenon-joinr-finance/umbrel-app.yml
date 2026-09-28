@@ -18,7 +18,7 @@ manifestVersion: 1
 id: tenon-joinr-finance
 category: finance
 name: Joinr Finance
-version: '1.0.0'
+version: '1.1.0'
 tagline: 'Personal wealth tracker: net worth, investments, cash flow, super and FIRE'
 # `main`, as tenon-joinr-backup's comment explains: a raw.githubusercontent URL names a branch.
 icon: https://raw.githubusercontent.com/devcal1/tenon-umbrel-store/main/tenon-joinr-finance/icon.svg
@@ -31,13 +31,22 @@ description: >-
   ⚠️ **UNINSTALLING THIS APP DELETES ITS DATABASE AND EVERY BACKUP OF IT.** Umbrel removes an
   app's data directory when the app is uninstalled, without asking, and this app keeps both the
   database and its backups there. Before you uninstall, download the newest backup from
-  Settings → Backups, and keep a copy somewhere that is not this server.
+  Settings → Backups, and keep a copy somewhere that is not this server: the weekly copy to the
+  NAS (below) does this once it is set up, and uninstalling never touches the copies on the NAS.
 
 
   **Backups:** every night at 02:30 the app takes a copy of its database and checks it before
   keeping it. It keeps the newest copy of each of the last 14 days it ran and of each of the last
   12 months, plus copies taken by hand ("Back up now"), before an import, before a restore and
   before an update. Settings → Backups lists them with a download button.
+
+
+  **Copy to the NAS (optional):** once a week, on Sunday at 03:00, the app copies every backup it
+  keeps to an rsync module on a NAS, with a catch-up after downtime and a "Copy to NAS now"
+  button. It only adds: nothing on the NAS is ever deleted or changed in place, and each copy is
+  proved by listing the NAS back. It is off until two files, the NAS address and its password,
+  are placed in this app's data folder over SSH with the `pnpm umbrel:nas-secrets` helper from
+  the joinr-fin repository; the page never shows or asks for the address or the password.
 
 
   **First run:** open the Import page and upload the workbook export. A dry run shows the
@@ -56,10 +65,13 @@ description: >-
   **Install the Joinr Registry app first.** This app's image is built on this server and served
   to Umbrel by that app; Install and Update fail while it is stopped.
 releaseNotes: >-
-  **1.0.0: the first release on the Umbrel.** Every page of the spreadsheet rebuild: Net Worth,
-  Investments, Cash, Budget, Side Income, Dividends, Other Assets, Super, Property, History and
-  FIRE, with live prices, the workbook import and reconciliation, the automatic month-end record,
-  and verified nightly backups with a download on the Settings page.
+  **1.1.0: a weekly copy of the backups to a NAS.** Every Sunday at 03:00 (with one catch-up
+  copy after downtime across that time) the app copies every backup it keeps to an rsync module
+  on a NAS, proves each copy by listing the NAS back, and never deletes or changes anything there. Settings → Backups gains a
+  "Copy to the NAS" block with a "Copy to NAS now" button, and every page shows a notice when the
+  copy is overdue or not working. The copy is off until its two files are placed with the
+  `pnpm umbrel:nas-secrets` helper (see joinr-fin's docs/deploy/RUNBOOK.md). The image now
+  includes rsync. No change to the database: no migration, and no backup is taken for the update.
 developer: Tenon
 website: https://github.com/devcal1/joinr-fin
 dependencies: []
@@ -84,7 +96,15 @@ submission: https://github.com/devcal1/tenon-umbrel-store
 # its -wal taken while the app writes may be inconsistent: after an Umbrel-level restore, restore
 # from the app's own verified copy in data/backups/ with the restore CLI (joinr-fin's
 # docs/deploy/RUNBOOK.md, "Restore").
+#   data/secrets holds the NAS copy's address and password: umbrelOS Backups must never
+# carry the NAS password to wherever those snapshots go. A folder entry excludes the folder and
+# everything under it (kopia's ignore file follows gitignore rules; `*` also matches dot-names, so
+# the helper's hidden temporaries are covered); the second entry is belt and braces. After an
+# Umbrel-level restore, place the files again with `pnpm umbrel:nas-secrets` (the runbook's
+# "Copy to the NAS").
 backupIgnore:
   - data/finance.db-shm
   - data/.*
   - data/backups/.*
+  - data/secrets
+  - data/secrets/*
