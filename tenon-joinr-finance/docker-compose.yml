@@ -35,7 +35,7 @@ services:
       - finance
 
   app:
-    image: 127.0.0.1:4930/joinr-finance:1.1.0@sha256:5f8bf817d6a7e9d90905ebdd728d43da433148f2341801ed44a29f33f3915c24
+    image: 127.0.0.1:4930/joinr-finance:1.1.1@sha256:b2ccba4a53e627d9b27c98ff5cc7bd9412531dde2c512971cc7ddf44b99d0c96
     restart: on-failure
     # A real init as PID 1, so SIGTERM reaches Node and the server closes SQLite cleanly.
     init: true

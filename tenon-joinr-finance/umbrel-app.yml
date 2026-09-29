@@ -18,7 +18,7 @@ manifestVersion: 1
 id: tenon-joinr-finance
 category: finance
 name: Joinr Finance
-version: '1.1.0'
+version: '1.1.1'
 tagline: 'Personal wealth tracker: net worth, investments, cash flow, super and FIRE'
 # `main`, as tenon-joinr-backup's comment explains: a raw.githubusercontent URL names a branch.
 icon: https://raw.githubusercontent.com/devcal1/tenon-umbrel-store/main/tenon-joinr-finance/icon.svg
@@ -65,13 +65,12 @@ description: >-
   **Install the Joinr Registry app first.** This app's image is built on this server and served
   to Umbrel by that app; Install and Update fail while it is stopped.
 releaseNotes: >-
-  **1.1.0: a weekly copy of the backups to a NAS.** Every Sunday at 03:00 (with one catch-up
-  copy after downtime across that time) the app copies every backup it keeps to an rsync module
-  on a NAS, proves each copy by listing the NAS back, and never deletes or changes anything there. Settings → Backups gains a
-  "Copy to the NAS" block with a "Copy to NAS now" button, and every page shows a notice when the
-  copy is overdue or not working. The copy is off until its two files are placed with the
-  `pnpm umbrel:nas-secrets` helper (see joinr-fin's docs/deploy/RUNBOOK.md). The image now
-  includes rsync. No change to the database: no migration, and no backup is taken for the update.
+  **1.1.1: denser layout for a wide desktop browser.** Tables fit their content instead of
+  stretching across the card, so names sit next to their figures; wide tables wrap their headers
+  rather than scrolling sideways. Charts grow with their width (up to 340 px tall) with larger
+  axis labels. On wide screens row actions and trade results sit on one line, and the holdings
+  table's More columns fit without scrolling. No change to the database: no migration, and no
+  backup is taken for the update.
 developer: Tenon
 website: https://github.com/devcal1/joinr-fin
 dependencies: []
