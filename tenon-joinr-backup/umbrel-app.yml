@@ -55,7 +55,7 @@ description: >-
 
 
   **Set-up:** the app needs four credentials placed in its data directory on this server. They are
-  put there over SSH by `umbrel-backup-secrets.cmd` in the tenon-quotr repository, so that no
+  put there over SSH by a helper script kept in a private repository, so that no
   password ever travels through a browser or a chat window. Until they are there the app's page
   says which are missing and takes no backup.
 

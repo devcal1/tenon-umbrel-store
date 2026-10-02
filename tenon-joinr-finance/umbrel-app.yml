@@ -18,7 +18,7 @@ manifestVersion: 1
 id: tenon-joinr-finance
 category: finance
 name: Joinr Finance
-version: '1.1.1'
+version: '1.2.0'
 tagline: 'Personal wealth tracker: net worth, investments, cash flow, super and FIRE'
 # `main`, as tenon-joinr-backup's comment explains: a raw.githubusercontent URL names a branch.
 icon: https://raw.githubusercontent.com/devcal1/tenon-umbrel-store/main/tenon-joinr-finance/icon.svg
@@ -58,19 +58,26 @@ description: >-
 
 
   **Access:** the app has no login of its own. Umbrel's login stays in front of every page, the
-  API and the backup downloads, and the app sits on a private Docker network that only Umbrel's
-  app proxy joins, so other apps on this server cannot call it directly.
+  API and the backup downloads, with one exception: the phone app's API under /api/mobile/
+  answers anyone on the home network or the tailnet without the Umbrel login. It returns data
+  only for a paired phone's key (made in Settings → Phone, removable there; pairing needs a code
+  that you open there, valid for 5 minutes) and it never changes anything. The key travels in
+  plain HTTP, so the phone should use this server's full Tailscale name (ending in .ts.net). The
+  app sits on a private Docker network that only Umbrel's app proxy joins, so other apps on this
+  server cannot call it directly.
 
 
   **Install the Joinr Registry app first.** This app's image is built on this server and served
   to Umbrel by that app; Install and Update fail while it is stopped.
 releaseNotes: >-
-  **1.1.1: denser layout for a wide desktop browser.** Tables fit their content instead of
-  stretching across the card, so names sit next to their figures; wide tables wrap their headers
-  rather than scrolling sideways. Charts grow with their width (up to 340 px tall) with larger
-  axis labels. On wide screens row actions and trade results sit on one line, and the holdings
-  table's More columns fit without scrolling. No change to the database: no migration, and no
-  backup is taken for the update.
+  **1.2.0: the phone app.** A read-only Android app (installed from an APK) shows today's change
+  in your holdings and bullion, with three home-screen widgets. Pair a phone in Settings → Phone
+  with a QR code; remove it there at any time. The app's API, /api/mobile/, is the one path that
+  skips the Umbrel login: it needs the paired phone's key and never changes anything. ASX
+  holdings refresh every 5 minutes during trading hours, and crypto and bullion every 15
+  minutes, so the web pages see fresher prices too. The update migrates the database (migration
+  0006: day prices), so the app takes a verified pre-update backup first; going back to 1.1.1
+  means restoring that backup.
 developer: Tenon
 website: https://github.com/devcal1/joinr-fin
 dependencies: []
@@ -101,9 +108,13 @@ submission: https://github.com/devcal1/tenon-umbrel-store
 # the helper's hidden temporaries are covered); the second entry is belt and braces. After an
 # Umbrel-level restore, place the files again with `pnpm umbrel:nas-secrets` (the runbook's
 # "Copy to the NAS").
+#   data/devices holds the paired phones' key hashes: umbrelOS Backups must not bring back a removed
+# phone's key after an Umbrel-level restore (a phone removed in Settings → Phone stays removed).
 backupIgnore:
   - data/finance.db-shm
   - data/.*
   - data/backups/.*
   - data/secrets
   - data/secrets/*
+  - data/devices
+  - data/devices/*

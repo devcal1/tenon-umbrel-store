@@ -26,8 +26,11 @@ services:
       APP_HOST: tenon-joinr-finance_app_1
       # The port the app listens on inside its container.
       APP_PORT: 3001
-      # No PROXY_AUTH_WHITELIST: Umbrel's login stays in front of every path, the API and the
-      # backup downloads included. The app has no login of its own.
+      # D138: only the phone API skips Umbrel's login; the app checks a paired device key there and
+      # refuses every write but the pairing exchange. Every other path, the web app, the API and the
+      # backup downloads included, keeps the Umbrel login. Rules match paths, not methods; a `/*`
+      # glob matches below that path. Never widen this.
+      PROXY_AUTH_WHITELIST: "/api/mobile/*"
     networks:
       # umbrel_main_network: Umbrel's auth service and the way in from the LAN.
       - default
@@ -35,7 +38,7 @@ services:
       - finance
 
   app:
-    image: 127.0.0.1:4930/joinr-finance:1.1.1@sha256:b2ccba4a53e627d9b27c98ff5cc7bd9412531dde2c512971cc7ddf44b99d0c96
+    image: 127.0.0.1:4930/joinr-finance:1.2.0@sha256:36f2bbb4209da899cb3ad243d96ddba97069e2ecc84c6befb0740cf15f28fa57
     restart: on-failure
     # A real init as PID 1, so SIGTERM reaches Node and the server closes SQLite cleanly.
     init: true
