@@ -18,7 +18,7 @@ manifestVersion: 1
 id: tenon-joinr-finance
 category: finance
 name: Joinr Finance
-version: '1.2.0'
+version: '1.3.0'
 tagline: 'Personal wealth tracker: net worth, investments, cash flow, super and FIRE'
 # `main`, as tenon-joinr-backup's comment explains: a raw.githubusercontent URL names a branch.
 icon: https://raw.githubusercontent.com/devcal1/tenon-umbrel-store/main/tenon-joinr-finance/icon.svg
@@ -70,14 +70,14 @@ description: >-
   **Install the Joinr Registry app first.** This app's image is built on this server and served
   to Umbrel by that app; Install and Update fail while it is stopped.
 releaseNotes: >-
-  **1.2.0: the phone app.** A read-only Android app (installed from an APK) shows today's change
-  in your holdings and bullion, with three home-screen widgets. Pair a phone in Settings → Phone
-  with a QR code; remove it there at any time. The app's API, /api/mobile/, is the one path that
-  skips the Umbrel login: it needs the paired phone's key and never changes anything. ASX
-  holdings refresh every 5 minutes during trading hours, and crypto and bullion every 15
-  minutes, so the web pages see fresher prices too. The update migrates the database (migration
-  0006: day prices), so the app takes a verified pre-update backup first; going back to 1.1.1
-  means restoring that backup.
+  **1.3.0: the phone app's period selector.** The phone app (1.1.0) gains a row of periods, 1W,
+  2W, 1M, 3M, 6M, 12M and ALL, beside today's change: each shows the change in your holdings and
+  bullion over that period, and ALL shows the lifetime gain, sold holdings included. To make this
+  work the server now keeps a daily price history: a daily job (16:52, and once a few minutes
+  after each start) fetches the daily closes of your listed holdings and funds from Yahoo and of
+  your coins from CoinGecko, about one request per holding a day. The old phone app keeps working
+  unchanged. The update migrates the database (migration 0007: price history), so the app takes a
+  verified pre-update backup first; going back to 1.2.0 means restoring that backup.
 developer: Tenon
 website: https://github.com/devcal1/joinr-fin
 dependencies: []
