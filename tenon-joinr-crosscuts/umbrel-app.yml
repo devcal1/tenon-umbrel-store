@@ -18,7 +18,7 @@ manifestVersion: 1
 id: tenon-joinr-crosscuts
 category: files
 name: Joinr Crosscuts
-version: '0.1.1'
+version: '0.1.3'
 tagline: Operations hub for TH Cabinets
 # `main`, as tenon-joinr-backup's comment explains: a raw.githubusercontent URL names a branch.
 icon: https://raw.githubusercontent.com/devcal1/tenon-umbrel-store/main/tenon-joinr-crosscuts/icon.svg
@@ -43,8 +43,8 @@ description: >-
   **First run:** open `/setup.html` on this app's port (4933) to create the first admin account.
   The page stops working as soon as any user exists.
 releaseNotes: >-
-  Maintenance update: the database library is updated (better-sqlite3 12.9.0, SQLite 3.53).
-  Nothing changes on screen and your data is untouched.
+  Maintenance update: runs on Node.js 24, and the photo library uses sharp 0.35 (security
+  fixes). Nothing changes on screen and your data is untouched.
 developer: Tenon
 website: https://github.com/devcal1/joinr-crosscuts
 dependencies: []
