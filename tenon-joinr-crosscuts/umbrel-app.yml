@@ -18,7 +18,7 @@ manifestVersion: 1
 id: tenon-joinr-crosscuts
 category: files
 name: Joinr Crosscuts
-version: '0.1.3'
+version: '0.1.4'
 tagline: Operations hub for TH Cabinets
 # `main`, as tenon-joinr-backup's comment explains: a raw.githubusercontent URL names a branch.
 icon: https://raw.githubusercontent.com/devcal1/tenon-umbrel-store/main/tenon-joinr-crosscuts/icon.svg
@@ -43,8 +43,12 @@ description: >-
   **First run:** open `/setup.html` on this app's port (4933) to create the first admin account.
   The page stops working as soon as any user exists.
 releaseNotes: >-
-  Maintenance update: runs on Node.js 24, and the photo library uses sharp 0.35 (security
-  fixes). Nothing changes on screen and your data is untouched.
+  New look and two new areas. Every page, the board included, now follows the Joinr house
+  style (the board's layout is unchanged). Accounts: numbered tax invoices (deposit, progress
+  and final), a notification bell and an overdue view. Design: a pipeline board for jobs,
+  material orders, inspections, photos linked to jobs, and tag chips in the photo library.
+  Existing photo tags are tidied to lower case once. The database is backed up automatically
+  before the update changes it.
 developer: Tenon
 website: https://github.com/devcal1/joinr-crosscuts
 dependencies: []
