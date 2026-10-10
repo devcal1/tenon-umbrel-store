@@ -64,3 +64,9 @@ submitter: Tenon
 # As tenon-joinr-backup: a community app has no submission pull request, so this names the
 # repository the app is published from.
 submission: https://github.com/devcal1/tenon-umbrel-store
+# umbrelOS's own Backups (Kopia snapshots of app-data, taken while the app runs) skip the live
+# database's shared-memory file, as tenon-joinr-finance's do. A snapshot of photos.db and its -wal
+# taken mid-write may be inconsistent; the consistent copies are the app's own VACUUM INTO backups
+# in data/db/backups/ (one per migration run; scheduled backups to the NAS come in a later release).
+backupIgnore:
+  - data/db/photos.db-shm
