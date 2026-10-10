@@ -26,10 +26,7 @@ services:
       PROXY_AUTH_ADD: "false"
 
   web:
-    # !!! PENDING: THE DIGEST BELOW IS A PLACEHOLDER. It must be replaced with the line the first
-    # joinr-crosscuts CI run prints BEFORE this branch is pushed. As written, an install pulls
-    # nothing and fails loudly, which is intended: the placeholder is not a valid digest.
-    image: ghcr.io/devcal1/crosscuts-web:0.1.0@sha256:PENDING_FIRST_CI_RUN
+    image: ghcr.io/devcal1/crosscuts-web:0.1.0@sha256:f27400028b18fed317b8b500ffdabfb4ac349e944fdcc1631959d72dcce65489
     restart: on-failure
     # Under ${APP_DATA_DIR}/data the app keeps its three directories. NEVER mount anything at
     # /app/db inside the container: that is source code. The data lives at /data/*.
