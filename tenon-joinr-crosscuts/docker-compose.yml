@@ -1,0 +1,47 @@
+# THE IMAGE IS PINNED BY TAG **AND** DIGEST, as tenon-joinr-backup's is. The tag is the app version
+# (the same as `version:` in umbrel-app.yml and `version` in joinr-crosscuts' crosscuts/app/
+# package.json); the digest is exactly what code runs. A version tag is immutable: the publish
+# workflow in joinr-crosscuts refuses to build a version whose tag already exists, so a tag here
+# can never silently point at different code.
+#
+# WHERE THE LINE COMES FROM: a push to joinr-crosscuts main publishes the image, and the workflow
+# prints the exact `image:` line for this file in its run summary (GitHub → Actions → the run →
+# Summary). Paste it over the line below, then bump `version:` and `releaseNotes:` in
+# umbrel-app.yml together, and push. See "Releasing / Joinr Crosscuts" in this repository's README.
+
+version: '3.7'
+
+services:
+  app_proxy:
+    environment:
+      # Format: <app-id>_<docker-service-name>_1
+      APP_HOST: tenon-joinr-crosscuts_web_1
+      # The port the app listens on inside its container.
+      APP_PORT: 3000
+      # Joinr Crosscuts does its own login (personal accounts, sessions, roles), so umbrelOS's proxy
+      # auth is switched off. There is NO PROXY_AUTH_WHITELIST: with proxy auth off umbreld never
+      # reads one, and the app itself decides, path by path, who gets in. ALSO keep the per-app
+      # "Require Umbrel login" toggle in the umbrelOS UI OFF: on umbrelOS 2.0 it overrides this
+      # line and puts a second login in front of the app's own.
+      PROXY_AUTH_ADD: "false"
+
+  web:
+    # !!! PENDING: THE DIGEST BELOW IS A PLACEHOLDER. It must be replaced with the line the first
+    # joinr-crosscuts CI run prints BEFORE this branch is pushed. As written, an install pulls
+    # nothing and fails loudly, which is intended: the placeholder is not a valid digest.
+    image: ghcr.io/devcal1/crosscuts-web:0.1.0@sha256:PENDING_FIRST_CI_RUN
+    restart: on-failure
+    # Under ${APP_DATA_DIR}/data the app keeps its three directories. NEVER mount anything at
+    # /app/db inside the container: that is source code. The data lives at /data/*.
+    #   The host layout (data/db, data/uploads, data/config) is the same as the old TH Cabinets
+    # app's, so cutover is a file copy. The `data/` skeleton beside this file is rsynced into
+    # app-data at install as uid 1000 (dropping the .gitkeep files), so all three directories
+    # exist, owned by the same account as every other app's, before this container first starts;
+    # Docker would otherwise create a missing bind source as root. (The image runs as root, as the
+    # old app's did, so it can write either way; the existing files from the old app copy in
+    # unchanged.)
+    #   `db/` holds photos.db, which is the ENTIRE live schedule. Never rename it.
+    volumes:
+      - ${APP_DATA_DIR}/data/uploads:/data/uploads
+      - ${APP_DATA_DIR}/data/db:/data/db
+      - ${APP_DATA_DIR}/data/config:/data/config

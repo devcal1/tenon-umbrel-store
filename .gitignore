@@ -19,3 +19,10 @@ tenon-joinr-finance/data/**
 tenon-joinr-registry/data/**
 !tenon-joinr-registry/data/**/
 !tenon-joinr-registry/data/**/.gitkeep
+
+# The same rule for Joinr Crosscuts, whose data directory on a machine that runs it holds the whole
+# live schedule database (photos.db and its backups), the user accounts and every uploaded photo.
+# Directories and their .gitkeep files only.
+tenon-joinr-crosscuts/data/**
+!tenon-joinr-crosscuts/data/**/
+!tenon-joinr-crosscuts/data/**/.gitkeep

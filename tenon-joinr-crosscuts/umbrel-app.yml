@@ -1,0 +1,66 @@
+# THIS `id` IS PERMANENT — see umbrel-app-store.yml. Umbrel treats a change of app id (or of the
+# store id it is prefixed with) as uninstall-and-reinstall, and uninstall deletes this app's data
+# directory without asking. That directory holds the whole live schedule database and every
+# uploaded photo.
+#
+# EVERY REQUIRED FIELD IS FILLED, as in tenon-joinr-backup/umbrel-app.yml (the required set is
+# `REQUIRED_MANIFEST_FIELDS` in getumbrel/umbrel-apps' `.tools/lint-apps.mjs`): manifestVersion,
+# id, category, name, version, tagline, description, developer, website, dependencies, repo,
+# support, port, gallery, path, submitter, submission.
+#
+# `manifestVersion: 1`: no lifecycle hooks.
+#
+# BUMP `version:` ON EVERY IMAGE CHANGE. Umbrel offers an update only when this field differs from
+# the installed one. Keep it equal to `version` in joinr-crosscuts' crosscuts/app/package.json,
+# which is the tag of the image named in docker-compose.yml: that repository's CI refuses an
+# app-code push without a bump, and prints the image line to paste into this folder's compose file.
+manifestVersion: 1
+id: tenon-joinr-crosscuts
+category: files
+name: Joinr Crosscuts
+version: '0.1.0'
+tagline: Operations hub for TH Cabinets
+# `main`, as tenon-joinr-backup's comment explains: a raw.githubusercontent URL names a branch.
+icon: https://raw.githubusercontent.com/devcal1/tenon-umbrel-store/main/tenon-joinr-crosscuts/icon.svg
+description: >-
+  The TH Cabinets operations app: the schedule board that runs on the workshop TV, the photo
+  library, personal logins with roles, job records, user admin and an audit log. It is growing into
+  a jobs, accounts and design hub.
+
+
+  ⚠️ **UNINSTALLING THIS APP DELETES ITS DATABASE AND EVERY PHOTO.** Umbrel removes an app's data
+  directory when the app is uninstalled, without asking, and this app keeps the whole live schedule
+  (workers, jobs, weeks, assignments), the user accounts, the audit log and the uploaded photos
+  there. Before you uninstall, copy the data folder somewhere that is not this server.
+
+
+  **Login:** the app has its own login: a username and password for each person, with roles that
+  decide which pages and actions each person can use. Umbrel's login is switched off in front of
+  it, and the "Require Umbrel login" toggle in umbrelOS must stay off. There is no whitelist: the
+  app itself answers every path and decides who gets in.
+
+
+  **First run:** open `/setup.html` on this app's port (4933) to create the first admin account.
+  The page stops working as soon as any user exists.
+releaseNotes: >-
+  First Joinr Crosscuts build: personal logins, roles, the schedule board behind login, job
+  records, user admin and audit log.
+developer: Tenon
+website: https://github.com/devcal1/joinr-crosscuts
+dependencies: []
+repo: https://github.com/devcal1/joinr-crosscuts
+support: https://github.com/devcal1/joinr-crosscuts/issues
+# Checked on 10 Oct 2026 against every `port:` in all 393 app manifests of a fresh clone of
+# getumbrel/umbrel-apps (nothing in 4900–4999, so 4933 is free there), against the other apps in
+# this store (4930 Joinr Registry, 4931 Joinr Backup, 4932 Joinr Finance) and against the TH
+# Cabinets store (4090). The device's own listeners and its other stores still have to be checked
+# at install, as for the other apps here.
+port: 4933
+gallery: []
+path: ''
+defaultUsername: ''
+defaultPassword: ''
+submitter: Tenon
+# As tenon-joinr-backup: a community app has no submission pull request, so this names the
+# repository the app is published from.
+submission: https://github.com/devcal1/tenon-umbrel-store

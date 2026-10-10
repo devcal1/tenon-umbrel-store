@@ -1,7 +1,8 @@
 # Tenon — Umbrel community app store
 
 A private-use [Umbrel](https://umbrel.com) community app store holding the apps Tenon runs on its
-own hardware. It contains three apps: **Joinr Backup**, **Joinr Registry** and **Joinr Finance**.
+own hardware. It contains four apps: **Joinr Backup**, **Joinr Registry**, **Joinr Finance** and
+**Joinr Crosscuts**.
 
 ## ⚠️ Read this first
 
@@ -14,9 +15,12 @@ uninstalled — no prompt, no undo:
   Settings → Backups before you uninstall it, and keep a copy somewhere that is not this server.
 - **Joinr Registry**: the stored images. Joinr Finance keeps running, but its next Update or a
   reinstall fails until a new version is released.
+- **Joinr Crosscuts**: its database and every uploaded photo. The database is the whole live
+  schedule, the user accounts and the audit log. Copy the app's data folder somewhere that is not
+  this server before you uninstall it.
 
 For the same reason, **the store id (`tenon`) and every app id (`tenon-joinr-backup`,
-`tenon-joinr-registry`, `tenon-joinr-finance`) are permanent**. Umbrel prefixes every community
+`tenon-joinr-registry`, `tenon-joinr-finance`, `tenon-joinr-crosscuts`) are permanent**. Umbrel prefixes every community
 app's id with its store's id and treats a change to either as uninstall-and-reinstall. Renaming
 one line in this repository would destroy that app's data.
 
@@ -108,6 +112,26 @@ planner, with its own SQLite database in the app's data directory. Its source is
 - The operator's runbook (install, release, restore, rollback, troubleshooting) is joinr-fin's
   [`docs/deploy/RUNBOOK.md`](https://github.com/devcal1/joinr-fin/blob/main/docs/deploy/RUNBOOK.md).
 
+### Joinr Crosscuts
+
+**Joinr Crosscuts** is the TH Cabinets operations app: the schedule board that runs on the
+workshop TV, the photo library, job records, user admin and an audit log, with a personal login
+for each person and roles that decide who can do what. Its source is the public
+[joinr-crosscuts](https://github.com/devcal1/joinr-crosscuts) repository, which builds the image
+and publishes it to GitHub Container Registry; the compose file here pins it by tag **and**
+digest.
+
+- **Access:** it has its own login, so Umbrel's login is switched off in front of it
+  (`PROXY_AUTH_ADD: "false"`, no whitelist). Umbrel's per-app **Require Umbrel login** toggle must
+  stay **off**: on umbrelOS 2.0 it overrides the compose file and would put a second login in
+  front of the first.
+- **First run:** open `/setup.html` on port 4933 and create the admin account. The page stops
+  working as soon as any user exists.
+- **Data:** `data/db` (`photos.db`, the whole live schedule, and the pre-migration backups it
+  writes beside it), `data/uploads` (photos) and `data/config`, laid out as the old TH Cabinets
+  app's were, so cutover from that app is a file copy. ⚠️ Uninstalling the app deletes all of it
+  (see above).
+
 ## Ports
 
 | Port | App | Notes |
@@ -115,9 +139,13 @@ planner, with its own SQLite database in the app's data directory. Its source is
 | 4930 | Joinr Registry | host-only: bound to `127.0.0.1`, never published to the LAN |
 | 4931 | Joinr Backup | through Umbrel's app proxy |
 | 4932 | Joinr Finance | through Umbrel's app proxy |
+| 4933 | Joinr Crosscuts | through Umbrel's app proxy; its own login |
 
 Each was checked against every app manifest of every app store on the device and against the
-host's listeners; joinr-fin's release script re-checks 4930 and 4932 before every release.
+host's listeners; joinr-fin's release script re-checks 4930 and 4932 before every release. 4933
+was checked on 10 Oct 2026 against every manifest in getumbrel/umbrel-apps, this repository and
+the TH Cabinets store; **the device's own listeners and its other stores still need checking at
+install**.
 
 ## What is in this repository, and what is not
 
@@ -140,12 +168,21 @@ tenon-joinr-finance/
                                   the loopback registry, pinned by tag AND digest
   icon.svg                        the dashboard tile
   data/                           the data directory skeleton: data/ and data/backups/
+tenon-joinr-crosscuts/
+  umbrel-app.yml                  the manifest — `version:` is the app version
+  docker-compose.yml              app_proxy (Umbrel login off) and the image from ghcr.io, pinned
+                                  by tag AND digest
+  icon.svg                        the dashboard tile
+  data/                           the data directory skeleton: db/, uploads/ and config/
+                                  (.gitkeep only)
 ```
 
 **This repository is public, so it holds no credential of any kind, and it never will.** It
 carries only manifests, compose files, icons and empty data skeletons. Joinr Backup's source lives
 in a private repository and its image is published to GitHub Container Registry, pinned here by
-digest. Joinr Finance's source is public and its image never leaves the Umbrel.
+digest. Joinr Crosscuts' source is public and its image is published to GitHub Container
+Registry, pinned here by digest. Joinr Finance's source is public and its image never leaves the
+Umbrel.
 
 ## Releasing
 
@@ -169,6 +206,18 @@ digest. Joinr Finance's source is public and its image never leaves the Umbrel.
    diff.
 3. Commit and push this repository. Umbrel polls for changes roughly every five minutes.
 4. `pnpm umbrel:status` must print "Safe to click Update in Umbrel"; then click Update.
+
+### Joinr Crosscuts
+
+1. Push to `main` in joinr-crosscuts, after bumping `version` in `crosscuts/app/package.json`
+   (every app-code change is a new version, and CI refuses a push without one). CI builds and
+   smoke-tests both architectures, publishes the image, and prints the line to paste in its run
+   summary: `image: ghcr.io/devcal1/crosscuts-web:<version>@sha256:<digest>`. A version tag is
+   never rebuilt: CI fails if it already exists.
+2. Paste that line over the `image:` line in `tenon-joinr-crosscuts/docker-compose.yml`.
+3. Bump `version:` in `tenon-joinr-crosscuts/umbrel-app.yml` to the same version and write
+   `releaseNotes:` — **an update Umbrel never offers is an update nobody gets**.
+4. Push. Umbrel polls for changes roughly every five minutes. Then click Update.
 
 ### Joinr Registry
 
