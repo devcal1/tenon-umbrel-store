@@ -18,7 +18,7 @@ manifestVersion: 1
 id: tenon-joinr-crosscuts
 category: files
 name: Joinr Crosscuts
-version: '0.1.6'
+version: '0.1.8'
 tagline: Operations hub for TH Cabinets
 # `main`, as tenon-joinr-backup's comment explains: a raw.githubusercontent URL names a branch.
 icon: https://raw.githubusercontent.com/devcal1/tenon-umbrel-store/main/tenon-joinr-crosscuts/icon.svg
@@ -43,15 +43,17 @@ description: >-
   **First run:** open `/setup.html` on this app's port (4933) to create the first admin account.
   The page stops working as soon as any user exists.
 releaseNotes: >-
-  Scheduling extras and Joinr intake. Finish week records how far each job got (cut and edge
-  through to return visit), and the board shows a small materials mark and the stage on each
-  row. A new Availability page records leave, sick days and part-time patterns: people who are
-  away show grey on the board, and the board warns before booking them. A Lookahead page shows
-  the next four weeks and what is waiting to start by promised install date. The TV board now
-  refreshes itself every five minutes when nobody is using it. Joinr intake: once a Joinr key is
-  entered on the Users page, quotes won in Joinr arrive in a "New from Joinr" list on the
-  Design/PM page to accept, link or ignore (it stays idle until a key is set). The database is
-  backed up automatically before the update changes it.
+  Backups to the NAS. Every night at 1:30 am Crosscuts keeps an encrypted copy of its database
+  on this server (14 nights plus one a month for a year), and every Saturday at 1:30 am it copies
+  everything the NAS doesn't have yet: the database archives, the photos and the private files.
+  Nothing on the NAS is ever deleted, and every copy is checked by listing the NAS back. The
+  Users page has a Backups section with the latest results and a Back up now button (admins
+  only). Backups stay off until the NAS details and the passphrase are placed with the backup
+  helper; the passphrase is never shown, logged or visible in the server's process list. Also in
+  this update: an invoice now always has a value (a deposit, progress or final
+  for a job with no value waits as "Needs value" until one is set), passwords expire after six
+  months (checked at the next sign-in), and printing the board no longer gives a dark page. The
+  database is backed up automatically before the update changes it.
 developer: Tenon
 website: https://github.com/devcal1/joinr-crosscuts
 dependencies: []
@@ -74,6 +76,11 @@ submission: https://github.com/devcal1/tenon-umbrel-store
 # umbrelOS's own Backups (Kopia snapshots of app-data, taken while the app runs) skip the live
 # database's shared-memory file, as tenon-joinr-finance's do. A snapshot of photos.db and its -wal
 # taken mid-write may be inconsistent; the consistent copies are the app's own VACUUM INTO backups
-# in data/db/backups/ (one per migration run; scheduled backups to the NAS come in a later release).
+# in data/db/backups/ (one per migration run) and the encrypted archives in data/db/backups/archives/.
+# The archives' passphrase and the NAS password never go into umbrelOS's backups beside the archives,
+# nor a half-made plaintext copy from staging.
 backupIgnore:
   - data/db/photos.db-shm
+  - data/config/nas-password
+  - data/config/backup-passphrase
+  - data/db/backups/.staging
