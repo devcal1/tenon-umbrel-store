@@ -18,7 +18,7 @@ manifestVersion: 1
 id: tenon-joinr-crosscuts
 category: files
 name: Joinr Crosscuts
-version: '0.1.5'
+version: '0.1.6'
 tagline: Operations hub for TH Cabinets
 # `main`, as tenon-joinr-backup's comment explains: a raw.githubusercontent URL names a branch.
 icon: https://raw.githubusercontent.com/devcal1/tenon-umbrel-store/main/tenon-joinr-crosscuts/icon.svg
@@ -43,14 +43,15 @@ description: >-
   **First run:** open `/setup.html` on this app's port (4933) to create the first admin account.
   The page stops working as soon as any user exists.
 releaseNotes: >-
-  New look and three new areas. Every page, the board included, now follows the Joinr house
-  style (the board's layout is unchanged). Accounts: numbered tax invoices (deposit, progress
-  and final), a notification bell and an overdue view. Design: a pipeline board for jobs,
-  material orders, inspections, photos linked to jobs, and tag chips in the photo library.
-  Collaboration: tasks with a weekday 7:00 reminder, comments on tasks and jobs, team chat
-  (company-wide and per department) and a private report library for accounts. Existing photo
-  tags are tidied to lower case once. The database is backed up automatically before the
-  update changes it.
+  Scheduling extras and Joinr intake. Finish week records how far each job got (cut and edge
+  through to return visit), and the board shows a small materials mark and the stage on each
+  row. A new Availability page records leave, sick days and part-time patterns: people who are
+  away show grey on the board, and the board warns before booking them. A Lookahead page shows
+  the next four weeks and what is waiting to start by promised install date. The TV board now
+  refreshes itself every five minutes when nobody is using it. Joinr intake: once a Joinr key is
+  entered on the Users page, quotes won in Joinr arrive in a "New from Joinr" list on the
+  Design/PM page to accept, link or ignore (it stays idle until a key is set). The database is
+  backed up automatically before the update changes it.
 developer: Tenon
 website: https://github.com/devcal1/joinr-crosscuts
 dependencies: []
