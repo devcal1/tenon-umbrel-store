@@ -26,7 +26,7 @@ services:
       PROXY_AUTH_ADD: "false"
 
   web:
-    image: ghcr.io/devcal1/crosscuts-web:0.1.9@sha256:3b2232e81f9963b06e2c048fb3586797d7fdeca71119eb499d6d6a55579afea3
+    image: ghcr.io/devcal1/crosscuts-web:0.1.10@sha256:ea15bf4edb3ba3126882b89cade78d0170882d0d201204adb32c5a795786d146
     restart: on-failure
     # Under ${APP_DATA_DIR}/data the app keeps its three directories. NEVER mount anything at
     # /app/db inside the container: that is source code. The data lives at /data/*.

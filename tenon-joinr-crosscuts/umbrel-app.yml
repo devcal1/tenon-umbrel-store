@@ -18,7 +18,7 @@ manifestVersion: 1
 id: tenon-joinr-crosscuts
 category: files
 name: Joinr Crosscuts
-version: '0.1.9'
+version: '0.1.10'
 tagline: Operations hub for TH Cabinets
 # `main`, as tenon-joinr-backup's comment explains: a raw.githubusercontent URL names a branch.
 icon: https://raw.githubusercontent.com/devcal1/tenon-umbrel-store/main/tenon-joinr-crosscuts/icon.svg
@@ -43,15 +43,13 @@ description: >-
   **First run:** open `/setup.html` on this app's port (4933) to create the first admin account.
   The page stops working as soon as any user exists.
 releaseNotes: >-
-  The Staff planner. A new Planner page (first in the menu, a tile on the home page and a section
-  on each job) shows this week and next as two rows of day tiles, with the month beside them.
-  Each department has its own layer, plus Company-wide, Install & hardware, Workshop and a
-  private Personal layer that only its owner sees. Install dates, board weeks, materials, client
-  inspections, who is away, invoices (Accounts only) and task due dates appear on it
-  automatically. Events can be all-day, timed or repeating, linked to a job, with an optional
-  reminder in the bell, and the month or the fortnight prints on one A4 page. A new Workshop
-  role sees the board and the planner's shared layers, read-only. The app has the TH Cabinets
-  shield as its icon. The database is backed up automatically before the update changes it.
+  A reorganised menu bar. Every page has a Dashboard link, then one menu per department:
+  Scheduling, Design/PM, Ordering, Accounts, Photos and Admin, each listing only the pages you
+  can open. Lookahead, Availability, Intake and Reports are now in the menu. Planner, Tasks,
+  Messages and Alerts sit together on the right, in the same place for everyone. Scheduling,
+  Design/PM, Ordering and Accounts carry a thin line in their Planner colour. Links that only
+  repeated the menu are gone from the dashboard and department pages, and the Photos page has a
+  Dashboard button. No database changes.
 developer: Tenon
 website: https://github.com/devcal1/joinr-crosscuts
 dependencies: []
