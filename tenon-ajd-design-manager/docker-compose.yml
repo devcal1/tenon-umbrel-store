@@ -13,7 +13,7 @@ services:
   web:
     # Pinned by tag AND digest. Built and published by devcal1/ajd's docker-publish workflow when
     # an `app-vX.Y.Z` tag is pushed there.
-    image: ghcr.io/devcal1/ajd-design-manager:1.1.0@sha256:f7654001870b6231012a12ae4b0629c551883003a8bb9de1cf38bbd87ad6bef8
+    image: ghcr.io/devcal1/ajd-design-manager:1.2.0@sha256:6f897dfe14092f5d2237395e3dc609affa2e0714ca62cb24f01bb4def64b6a98
     restart: on-failure
     stop_grace_period: 1m
     environment:

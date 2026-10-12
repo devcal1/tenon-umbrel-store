@@ -14,7 +14,7 @@ manifestVersion: 1
 id: tenon-ajd-design-manager
 category: files
 name: AJD Design Manager
-version: '1.1.0'
+version: '1.2.0'
 tagline: Practice manager for AJ Interiors
 icon: https://raw.githubusercontent.com/devcal1/tenon-umbrel-store/main/tenon-ajd-design-manager/icon.svg
 description: >-
@@ -47,11 +47,14 @@ deterministicPassword: true
 defaultUsername: ''
 defaultPassword: ''
 releaseNotes: >-
-  New: a warning badge on a selection when its product library item has changed since it was added
-  (with a prompt showing exactly what an update would change); a by-supplier view of the document;
-  per-project display settings for the preview and PDF (hide costs, images, approval column, set the
-  header text); and issued revisions (Rev A, Rev B...) that freeze the document so it can be viewed,
-  exported, compared with the current version, or restored. Existing data is upgraded automatically.
+  New: a web clipper (drag "Clip to AJD" from the Library page to your bookmarks bar, then click it on
+  any product page, or paste a product address) that saves into the library or straight into a room.
+  The project page has a new Client document panel (By room / By supplier, Preview, Download PDF and
+  issued revisions in one place), and the client document gains a Supplier column, aligned tables
+  and an optional product link. Also a large round of fixes: restoring a backup is now safe (it saves a
+  copy of your current data first and refuses damaged backups), the app no longer freezes on hostile
+  web pages, forged cross-site requests are blocked, and many smaller fixes. You will be signed out
+  once after updating. Take a Back up now from Settings first. Existing data is upgraded automatically.
 submitter: Tenon
 submission: https://github.com/devcal1/tenon-umbrel-store
 backupIgnore:
