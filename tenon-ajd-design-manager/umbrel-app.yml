@@ -14,7 +14,7 @@ manifestVersion: 1
 id: tenon-ajd-design-manager
 category: files
 name: AJD Design Manager
-version: '1.0.1'
+version: '1.1.0'
 tagline: Practice manager for AJ Interiors
 icon: https://raw.githubusercontent.com/devcal1/tenon-umbrel-store/main/tenon-ajd-design-manager/icon.svg
 description: >-
@@ -47,9 +47,11 @@ deterministicPassword: true
 defaultUsername: ''
 defaultPassword: ''
 releaseNotes: >-
-  Fixes sign-in: the password Umbrel shows for the app now works (1.0.0 accepted a different value,
-  so it never did). There is also a new Password section under the app's Settings (the small gear):
-  choose your own password there. Once you have, it is kept across updates and restarts.
+  New: a warning badge on a selection when its product library item has changed since it was added
+  (with a prompt showing exactly what an update would change); a by-supplier view of the document;
+  per-project display settings for the preview and PDF (hide costs, images, approval column, set the
+  header text); and issued revisions (Rev A, Rev B...) that freeze the document so it can be viewed,
+  exported, compared with the current version, or restored. Existing data is upgraded automatically.
 submitter: Tenon
 submission: https://github.com/devcal1/tenon-umbrel-store
 backupIgnore:
