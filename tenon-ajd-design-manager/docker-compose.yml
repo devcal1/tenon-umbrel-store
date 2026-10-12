@@ -1,0 +1,30 @@
+version: '3.7'
+
+services:
+  app_proxy:
+    environment:
+      APP_HOST: tenon-ajd-design-manager_web_1
+      APP_PORT: 3000
+      # The app has its own password login (`APP_PASSWORD` below), so Umbrel's login is switched off
+      # in front of it, as for tenon-joinr-crosscuts. Umbrel's per-app "Require Umbrel login"
+      # toggle must stay off or it puts a second login in front of the first.
+      PROXY_AUTH_ADD: "false"
+
+  web:
+    # Pinned by tag AND digest. Built and published by devcal1/ajd's docker-publish workflow when
+    # an `app-vX.Y.Z` tag is pushed there.
+    image: ghcr.io/devcal1/ajd-design-manager:1.0.0@sha256:f7f77a5658273cae680126bc3ce9fd898a640299b1a91c17ee6f83da922864a4
+    restart: on-failure
+    stop_grace_period: 1m
+    environment:
+      # Seeds the app's one password on first boot; Umbrel shows it as the app's password.
+      APP_PASSWORD: $APP_SEED
+      SESSION_SECRET: $APP_SEED
+      # The app's own nightly backup (a consistent SQLite snapshot plus the uploads folder) runs at
+      # BACKUP_HOUR local time and keeps BACKUP_RETENTION copies, under data/backups. A container
+      # does not inherit the host's timezone, so TZ is set here.
+      TZ: "Australia/Sydney"
+      BACKUP_HOUR: "2"
+      BACKUP_RETENTION: "14"
+    volumes:
+      - ${APP_DATA_DIR}/data:/app/data

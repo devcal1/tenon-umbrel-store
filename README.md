@@ -1,8 +1,8 @@
 # Tenon — Umbrel community app store
 
 A private-use [Umbrel](https://umbrel.com) community app store holding the apps Tenon runs on its
-own hardware. It contains four apps: **Joinr Backup**, **Joinr Registry**, **Joinr Finance** and
-**Joinr Crosscuts**.
+own hardware. It contains five apps: **Joinr Backup**, **Joinr Registry**, **Joinr Finance**,
+**Joinr Crosscuts** and **AJD Design Manager**.
 
 ## ⚠️ Read this first
 
@@ -18,9 +18,13 @@ uninstalled — no prompt, no undo:
 - **Joinr Crosscuts**: its database and every uploaded photo. The database is the whole live
   schedule, the user accounts and the audit log. Copy the app's data folder somewhere that is not
   this server before you uninstall it.
+- **AJD Design Manager**: the practice database, every uploaded image **and the app's own nightly
+  backups, which live inside the same folder**. Copy the app's data folder somewhere that is not
+  this server before you uninstall it.
 
 For the same reason, **the store id (`tenon`) and every app id (`tenon-joinr-backup`,
-`tenon-joinr-registry`, `tenon-joinr-finance`, `tenon-joinr-crosscuts`) are permanent**. Umbrel prefixes every community
+`tenon-joinr-registry`, `tenon-joinr-finance`, `tenon-joinr-crosscuts`,
+`tenon-ajd-design-manager`) are permanent**. Umbrel prefixes every community
 app's id with its store's id and treats a change to either as uninstall-and-reinstall. Renaming
 one line in this repository would destroy that app's data.
 
@@ -132,6 +136,28 @@ digest.
   app's were, so cutover from that app is a file copy. ⚠️ Uninstalling the app deletes all of it
   (see above).
 
+### AJD Design Manager
+
+**AJD Design Manager** is the practice manager for AJ Interiors: projects, a practice-wide product
+library, and room-by-room FF&E design documents with PDF export. Its source is the public
+[ajd](https://github.com/devcal1/ajd) repository, whose `docker-publish` workflow builds the image
+and publishes it to GitHub Container Registry; the compose file here pins it by tag **and**
+digest.
+
+- **Access:** it has one shared password and its own login, so Umbrel's login is switched off in
+  front of it (`PROXY_AUTH_ADD: "false"`, no whitelist). Umbrel's per-app **Require Umbrel login**
+  toggle must stay **off**: on umbrelOS 2.0 it overrides the compose file and would put a second
+  login in front of the first. The password is the one Umbrel shows for the app (it is
+  `$APP_SEED`, seeded into the app on first boot only, so it is per install).
+- **Backups:** the app backs itself up every night at 2am (`TZ` is `Australia/Sydney`, set in the
+  compose file because a container does not inherit the host's timezone), keeping 14, into
+  `data/backups`. Settings (the small gear) lists them by date and restores any one; a restore
+  restarts the container, which `restart: on-failure` brings straight back. Those backups are
+  inside the app's data folder, so they are **not** a defence against uninstalling the app, and
+  they only leave this server if Umbrel's own backup covers that folder.
+- **Data:** `data/` holds `ajd.db` (and its `-wal`/`-shm` files), `uploads/` and `backups/`.
+  ⚠️ Uninstalling the app deletes all of it (see above).
+
 ## Ports
 
 | Port | App | Notes |
@@ -140,12 +166,15 @@ digest.
 | 4931 | Joinr Backup | through Umbrel's app proxy |
 | 4932 | Joinr Finance | through Umbrel's app proxy |
 | 4933 | Joinr Crosscuts | through Umbrel's app proxy; its own login |
+| 4934 | AJD Design Manager | through Umbrel's app proxy; its own login |
 
 Each was checked against every app manifest of every app store on the device and against the
 host's listeners; joinr-fin's release script re-checks 4930 and 4932 before every release. 4933
 was checked on 10 Oct 2026 against every manifest in getumbrel/umbrel-apps, this repository and
 the TH Cabinets store; **the device's own listeners and its other stores still need checking at
-install**.
+install**. 4934 was chosen on 12 Oct 2026 as the next number after 4933 and checked against this
+repository's manifests only: **it has not been checked against getumbrel/umbrel-apps, the TH
+Cabinets store or the device, and still needs that check at install**.
 
 ## What is in this repository, and what is not
 
@@ -175,6 +204,12 @@ tenon-joinr-crosscuts/
   icon.svg                        the dashboard tile
   data/                           the data directory skeleton: db/, uploads/ and config/
                                   (.gitkeep only)
+tenon-ajd-design-manager/
+  umbrel-app.yml                  the manifest — `version:` is the app version
+  docker-compose.yml              app_proxy (Umbrel login off) and the image from ghcr.io, pinned
+                                  by tag AND digest
+  icon.svg                        the dashboard tile
+  data/                           the data directory skeleton (.gitkeep only)
 ```
 
 **This repository is public, so it holds no credential of any kind, and it never will.** It
@@ -216,6 +251,17 @@ Umbrel.
    never rebuilt: CI fails if it already exists.
 2. Paste that line over the `image:` line in `tenon-joinr-crosscuts/docker-compose.yml`.
 3. Bump `version:` in `tenon-joinr-crosscuts/umbrel-app.yml` to the same version and write
+   `releaseNotes:` — **an update Umbrel never offers is an update nobody gets**.
+4. Push. Umbrel polls for changes roughly every five minutes. Then click Update.
+
+### AJD Design Manager
+
+1. In devcal1/ajd, push a tag `app-vX.Y.Z` (the `docker-publish` workflow builds the image and
+   publishes `ghcr.io/devcal1/ajd-design-manager:X.Y.Z`). Read the manifest digest from the
+   registry (`docker-content-digest` of `/v2/devcal1/ajd-design-manager/manifests/X.Y.Z`).
+2. Paste `ghcr.io/devcal1/ajd-design-manager:X.Y.Z@sha256:<digest>` over the `image:` line in
+   `tenon-ajd-design-manager/docker-compose.yml`.
+3. Bump `version:` in `tenon-ajd-design-manager/umbrel-app.yml` to `X.Y.Z` and write
    `releaseNotes:` — **an update Umbrel never offers is an update nobody gets**.
 4. Push. Umbrel polls for changes roughly every five minutes. Then click Update.
 

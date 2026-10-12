@@ -26,3 +26,10 @@ tenon-joinr-registry/data/**
 tenon-joinr-crosscuts/data/**
 !tenon-joinr-crosscuts/data/**/
 !tenon-joinr-crosscuts/data/**/.gitkeep
+
+# The same rule for AJD Design Manager, whose data directory on a machine that runs it holds the
+# whole practice database (ajd.db and its WAL files), every uploaded image and the app's own nightly
+# backups of both. Directories and their .gitkeep files only.
+tenon-ajd-design-manager/data/**
+!tenon-ajd-design-manager/data/**/
+!tenon-ajd-design-manager/data/**/.gitkeep

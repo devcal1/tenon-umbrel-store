@@ -1,0 +1,48 @@
+# THIS `id` IS PERMANENT — see umbrel-app-store.yml. Umbrel treats a change of app id (or of the
+# store id it is prefixed with) as uninstall-and-reinstall, and uninstall deletes this app's data
+# directory without asking. That directory holds the whole practice database, every uploaded
+# image and the app's own nightly backups.
+#
+# EVERY REQUIRED FIELD IS FILLED, as in tenon-joinr-crosscuts/umbrel-app.yml: manifestVersion, id,
+# category, name, version, tagline, description, developer, website, dependencies, repo, support,
+# port, gallery, path, submitter, submission.
+#
+# BUMP `version:` ON EVERY IMAGE CHANGE. Umbrel offers an update only when this field differs from
+# the installed one. Keep it equal to the tag of the image named in docker-compose.yml, which is the
+# `app-vX.Y.Z` tag pushed in devcal1/ajd to publish it.
+manifestVersion: 1
+id: tenon-ajd-design-manager
+category: files
+name: AJD Design Manager
+version: '1.0.0'
+tagline: Practice manager for AJ Interiors
+icon: https://raw.githubusercontent.com/devcal1/tenon-umbrel-store/main/tenon-ajd-design-manager/icon.svg
+description: >-
+  Projects, a practice-wide product library, and room-by-room FF&E design documents with PDF export,
+  for AJ Interiors. Each project holds a schedule of rooms and selections (category, supplier, SKU,
+  dimensions, finish, cost, quantity, status), optionally prefilled from the shared product
+  library, and exports as a client-ready PDF.
+
+
+  It backs itself up every night (2am Sydney time, keeping 14) into its own data folder, and
+  Settings (the small gear) lists those backups by date so any one can be restored.
+
+
+  ⚠️ **UNINSTALLING THIS APP DELETES ITS DATABASE, EVERY IMAGE AND ITS BACKUPS.** Umbrel removes an
+  app's data directory when the app is uninstalled, without asking, and the app's own backups live
+  inside that directory. Copy the app's data folder somewhere that is not this server first.
+developer: Tenon
+website: https://github.com/devcal1/ajd
+dependencies: []
+repo: https://github.com/devcal1/ajd
+support: https://github.com/devcal1/ajd/issues
+port: 4934
+gallery: []
+path: ''
+deterministicPassword: true
+defaultUsername: ''
+defaultPassword: '$APP_SEED'
+submitter: Tenon
+submission: https://github.com/devcal1/tenon-umbrel-store
+backupIgnore:
+  - data/ajd.db-shm

@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <!-- AJ Interiors palette: warm greige tile, ink wordmark, dusty clay rule. No embedded image or webfont: the dashboard renders this as an <img>, so the serif is a system stack. -->
+  <rect width="512" height="512" rx="96" fill="#f1efe8"/>
+  <rect x="6" y="6" width="500" height="500" rx="90" fill="none" stroke="#d9d2c2" stroke-width="4"/>
+  <text x="256" y="292" text-anchor="middle" font-family="'Libre Baskerville', Baskerville, 'Times New Roman', Georgia, serif" font-size="168" font-weight="400" fill="#211e1a" letter-spacing="4">AJD</text>
+  <rect x="176" y="332" width="160" height="6" rx="3" fill="#9c8b7e"/>
+  <text x="256" y="388" text-anchor="middle" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="26" fill="#6d6459" letter-spacing="7">DESIGN MANAGER</text>
+</svg>
