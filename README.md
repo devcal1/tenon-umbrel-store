@@ -147,8 +147,12 @@ digest.
 - **Access:** it has one shared password and its own login, so Umbrel's login is switched off in
   front of it (`PROXY_AUTH_ADD: "false"`, no whitelist). Umbrel's per-app **Require Umbrel login**
   toggle must stay **off**: on umbrelOS 2.0 it overrides the compose file and would put a second
-  login in front of the first. The password is the one Umbrel shows for the app (it is
-  `$APP_SEED`, seeded into the app on first boot only, so it is per install).
+  login in front of the first. **Password:** the manifest sets `deterministicPassword: true`, so
+  Umbrel generates a password per install, shows it, and passes it to the compose file as
+  `$APP_PASSWORD` (not `$APP_SEED`, a different value; 1.0.0 used that by mistake and the displayed
+  password never worked). That is the sign-in password until someone chooses their own under the
+  app's Settings → Password; after that the app ignores the variable, so updates cannot overwrite
+  the chosen one. There is no forgot-password flow.
 - **Backups:** the app backs itself up every night at 2am (`TZ` is `Australia/Sydney`, set in the
   compose file because a container does not inherit the host's timezone), keeping 14, into
   `data/backups`. Settings (the small gear) lists them by date and restores any one; a restore

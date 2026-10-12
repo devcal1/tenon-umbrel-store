@@ -13,12 +13,16 @@ services:
   web:
     # Pinned by tag AND digest. Built and published by devcal1/ajd's docker-publish workflow when
     # an `app-vX.Y.Z` tag is pushed there.
-    image: ghcr.io/devcal1/ajd-design-manager:1.0.0@sha256:f7f77a5658273cae680126bc3ce9fd898a640299b1a91c17ee6f83da922864a4
+    image: ghcr.io/devcal1/ajd-design-manager:1.0.1@sha256:d48bb602734c45374d60dd3514eecbe04a9f6718412d335fc989714163016bed
     restart: on-failure
     stop_grace_period: 1m
     environment:
-      # Seeds the app's one password on first boot; Umbrel shows it as the app's password.
-      APP_PASSWORD: $APP_SEED
+      # The password Umbrel generates and displays for this app (the manifest sets
+      # `deterministicPassword: true`, which is what makes Umbrel provide `$APP_PASSWORD`; it is NOT
+      # the same value as `$APP_SEED`, which 1.0.0 wrongly used here and so never matched what Umbrel
+      # showed). It is the sign-in password until someone chooses their own under the app's
+      # Settings; after that the app ignores this variable, so updates cannot overwrite it.
+      APP_PASSWORD: $APP_PASSWORD
       SESSION_SECRET: $APP_SEED
       # The app's own nightly backup (a consistent SQLite snapshot plus the uploads folder) runs at
       # BACKUP_HOUR local time and keeps BACKUP_RETENTION copies, under data/backups. A container

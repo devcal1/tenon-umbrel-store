@@ -14,7 +14,7 @@ manifestVersion: 1
 id: tenon-ajd-design-manager
 category: files
 name: AJD Design Manager
-version: '1.0.0'
+version: '1.0.1'
 tagline: Practice manager for AJ Interiors
 icon: https://raw.githubusercontent.com/devcal1/tenon-umbrel-store/main/tenon-ajd-design-manager/icon.svg
 description: >-
@@ -39,9 +39,17 @@ support: https://github.com/devcal1/ajd/issues
 port: 4934
 gallery: []
 path: ''
+# With `deterministicPassword: true` Umbrel generates the password and shows it itself, and hands it to
+# the compose file as `$APP_PASSWORD`; `defaultPassword` is left blank, as in getumbrel/umbrel-apps'
+# own jam, agora and lndg. (1.0.0 set it to '$APP_SEED', which is a different value, and fed the
+# container `$APP_SEED`, so the password Umbrel displayed never worked.)
 deterministicPassword: true
 defaultUsername: ''
-defaultPassword: '$APP_SEED'
+defaultPassword: ''
+releaseNotes: >-
+  Fixes sign-in: the password Umbrel shows for the app now works (1.0.0 accepted a different value,
+  so it never did). There is also a new Password section under the app's Settings (the small gear):
+  choose your own password there. Once you have, it is kept across updates and restarts.
 submitter: Tenon
 submission: https://github.com/devcal1/tenon-umbrel-store
 backupIgnore:
