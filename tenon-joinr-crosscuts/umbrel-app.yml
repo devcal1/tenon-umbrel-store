@@ -18,7 +18,7 @@ manifestVersion: 1
 id: tenon-joinr-crosscuts
 category: files
 name: Joinr Crosscuts
-version: '0.1.10'
+version: '0.1.13'
 tagline: Operations hub for TH Cabinets
 # `main`, as tenon-joinr-backup's comment explains: a raw.githubusercontent URL names a branch.
 icon: https://raw.githubusercontent.com/devcal1/tenon-umbrel-store/main/tenon-joinr-crosscuts/icon.svg
@@ -43,13 +43,16 @@ description: >-
   **First run:** open `/setup.html` on this app's port (4933) to create the first admin account.
   The page stops working as soon as any user exists.
 releaseNotes: >-
-  A reorganised menu bar. Every page has a Dashboard link, then one menu per department:
-  Scheduling, Design/PM, Ordering, Accounts, Photos and Admin, each listing only the pages you
-  can open. Lookahead, Availability, Intake and Reports are now in the menu. Planner, Tasks,
-  Messages and Alerts sit together on the right, in the same place for everyone. Scheduling,
-  Design/PM, Ordering and Accounts carry a thin line in their Planner colour. Links that only
-  repeated the menu are gone from the dashboard and department pages, and the Photos page has a
-  Dashboard button. No database changes.
+  Pay runs, BAS sales, supplier accounts, and two new roles. Accounts gets a fortnightly pay-run
+  screen laid out like the paper timesheet (normal time, overtime and double time worked out, a
+  summary for MYOB, printable timesheets and overtime log); BAS sales by month from paid invoices,
+  with quarter and year totals, lodging that locks a month and typed-in history; and a monthly
+  supplier statements checklist with the statement attached and a printable blank form. New
+  Ordering and Workshop Manager roles: Ordering marks orders placed, the Workshop Manager receives
+  deliveries on a new Deliveries page, with delivery notes for short or damaged deliveries. Mark
+  paid now refuses a date before the invoice was issued or in the future, and form errors are
+  orange. Database changes: new tables for pay runs, BAS and suppliers, four new columns on order
+  lines, and the roles table rebuilt to allow the two new roles (backed up first, as always).
 developer: Tenon
 website: https://github.com/devcal1/joinr-crosscuts
 dependencies: []
