@@ -18,7 +18,7 @@ manifestVersion: 1
 id: tenon-joinr-crosscuts
 category: files
 name: Joinr Crosscuts
-version: '0.1.13'
+version: '0.1.14'
 tagline: Operations hub for TH Cabinets
 # `main`, as tenon-joinr-backup's comment explains: a raw.githubusercontent URL names a branch.
 icon: https://raw.githubusercontent.com/devcal1/tenon-umbrel-store/main/tenon-joinr-crosscuts/icon.svg
@@ -43,7 +43,11 @@ description: >-
   **First run:** open `/setup.html` on this app's port (4933) to create the first admin account.
   The page stops working as soon as any user exists.
 releaseNotes: >-
-  Pay runs, BAS sales, supplier accounts, and two new roles. Accounts gets a fortnightly pay-run
+  One menu bar on every page: the schedule board and the Workers page now have the same top menu
+  bar as the rest of the app (the board's week buttons, PDF and JPG sit in a strip under it), and
+  the department menus drop down when the mouse points at them. No database changes. Also
+  includes 0.1.13: pay runs, BAS sales, supplier accounts, and two new roles. Accounts gets a
+  fortnightly pay-run
   screen laid out like the paper timesheet (normal time, overtime and double time worked out, a
   summary for MYOB, printable timesheets and overtime log); BAS sales by month from paid invoices,
   with quarter and year totals, lodging that locks a month and typed-in history; and a monthly
