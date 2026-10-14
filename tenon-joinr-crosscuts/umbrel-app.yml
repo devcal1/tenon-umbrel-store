@@ -18,7 +18,7 @@ manifestVersion: 1
 id: tenon-joinr-crosscuts
 category: files
 name: Joinr Crosscuts
-version: '0.1.14'
+version: '0.1.15'
 tagline: Operations hub for TH Cabinets
 # `main`, as tenon-joinr-backup's comment explains: a raw.githubusercontent URL names a branch.
 icon: https://raw.githubusercontent.com/devcal1/tenon-umbrel-store/main/tenon-joinr-crosscuts/icon.svg
@@ -43,20 +43,18 @@ description: >-
   **First run:** open `/setup.html` on this app's port (4933) to create the first admin account.
   The page stops working as soon as any user exists.
 releaseNotes: >-
-  One menu bar on every page: the schedule board and the Workers page now have the same top menu
-  bar as the rest of the app (the board's week buttons, PDF and JPG sit in a strip under it), and
-  the department menus drop down when the mouse points at them. No database changes. Also
-  includes 0.1.13: pay runs, BAS sales, supplier accounts, and two new roles. Accounts gets a
-  fortnightly pay-run
-  screen laid out like the paper timesheet (normal time, overtime and double time worked out, a
-  summary for MYOB, printable timesheets and overtime log); BAS sales by month from paid invoices,
-  with quarter and year totals, lodging that locks a month and typed-in history; and a monthly
-  supplier statements checklist with the statement attached and a printable blank form. New
-  Ordering and Workshop Manager roles: Ordering marks orders placed, the Workshop Manager receives
-  deliveries on a new Deliveries page, with delivery notes for short or damaged deliveries. Mark
-  paid now refuses a date before the invoice was issued or in the future, and form errors are
-  orange. Database changes: new tables for pay runs, BAS and suppliers, four new columns on order
-  lines, and the roles table rebuilt to allow the two new roles (backed up first, as always).
+  Ordering pages. A drawer grid on each job (checked by Design/PM) feeds one Drawer order page
+  that adds up every job plus a stock row into a sheet per supplier (EDGE or DTC), prints it and
+  places it; placed orders keep each job's note and can be reprinted or undone. A monthly stock
+  order (the Workshop Manager counts, Ordering orders by supplier group, or marks a month as
+  nothing to order), a monthly board stocktake whose confirmed value shows to Accounts under
+  Stock value, and paint orders per job and for the workshop, printed on the letterhead. Stock,
+  paint and drawer stock arrive on the Deliveries page under Stock and paint, and their delivery
+  notes tell Ordering. The dashboard reminds counters from the 25th to the 7th. Database changes:
+  new tables for drawers, stock, boards and paint, and two new columns on stock months (backed up
+  first, as always). Also includes 0.1.14 (one menu bar on every page, hover menus) and 0.1.13
+  (pay runs, BAS sales, supplier accounts, the Ordering and Workshop Manager roles, the Deliveries
+  page).
 developer: Tenon
 website: https://github.com/devcal1/joinr-crosscuts
 dependencies: []
