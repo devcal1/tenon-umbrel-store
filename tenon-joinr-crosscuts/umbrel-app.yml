@@ -18,7 +18,7 @@ manifestVersion: 1
 id: tenon-joinr-crosscuts
 category: files
 name: Joinr Crosscuts
-version: '0.1.17'
+version: '0.1.18'
 tagline: Operations hub for TH Cabinets
 # `main`, as tenon-joinr-backup's comment explains: a raw.githubusercontent URL names a branch.
 icon: https://raw.githubusercontent.com/devcal1/tenon-umbrel-store/main/tenon-joinr-crosscuts/icon.svg
@@ -43,15 +43,13 @@ description: >-
   **First run:** open `/setup.html` on this app's port (4933) to create the first admin account.
   The page stops working as soon as any user exists.
 releaseNotes: >-
-  Owner-only tools. The owner (the first login set up) now holds three permissions no other
-  admin gets by default: Bonuses, Alarms and Loans, and only the owner can change, reset or
-  disable the owner's login. Bonuses: per-job bonuses (rate × job price × checks ticked ÷ 7,
-  split by share points), quoted hours from Joinr, confirm, paid shares and what each person is
-  owed. Alarms: alarm holders and codes, stored encrypted and shown for 30 seconds on Show,
-  leavers flagged, the alarm company and weekly arm/disarm times. Loans: rates, repayments with
-  interest worked out, the balance always calculated, statements; grantable to an Accounts
-  login. Database change: the owner mark and new tables (backed up first, as always). Also
-  includes 0.1.13 to 0.1.16.
+  Small changes. Planner events can repeat every year. Printed pay-run time sheets are
+  landscape, with wider columns. BAS sales are typed in by hand for every month (invoices no
+  longer count); each new month appears blank, ready to fill in, and the CSV is one line per
+  month. The Accounts Stock value page is removed. New Admin accounts page in the Accounts
+  menu for non-supplier accounts such as BAS, Workcover and insurance, working like Supplier
+  accounts. Database change: two added columns (backed up first, as always). Also includes
+  0.1.13 to 0.1.17.
 developer: Tenon
 website: https://github.com/devcal1/joinr-crosscuts
 dependencies: []
