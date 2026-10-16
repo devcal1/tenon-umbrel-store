@@ -18,7 +18,7 @@ manifestVersion: 1
 id: tenon-joinr-crosscuts
 category: files
 name: Joinr Crosscuts
-version: '0.1.16'
+version: '0.1.17'
 tagline: Operations hub for TH Cabinets
 # `main`, as tenon-joinr-backup's comment explains: a raw.githubusercontent URL names a branch.
 icon: https://raw.githubusercontent.com/devcal1/tenon-umbrel-store/main/tenon-joinr-crosscuts/icon.svg
@@ -43,15 +43,15 @@ description: >-
   **First run:** open `/setup.html` on this app's port (4933) to create the first admin account.
   The page stops working as soon as any user exists.
 releaseNotes: >-
-  Design/PM tools. Stone benchtop orders in a new Benchtops section on each job: the form takes
-  the job's details, each send makes a numbered revision kept exactly as sent, it prints on the
-  letterhead to the chosen supplier, and orders can be cancelled and restored. A Stone orders list
-  and dashboard tile under Design/PM, a printed benchtop sheet (filled in from the job, or blank)
-  with the edge key, and a batten calculator that works out the gap or the number of battens and
-  prints the set-out. Every page now prints without the menu bar. Database change: two new tables
-  for stone orders (backed up first, as always). Also includes 0.1.15 (Ordering pages: drawers,
-  stock, boards, paint), 0.1.14 (one menu bar, hover menus) and 0.1.13 (pay runs, BAS, supplier
-  accounts, the Ordering and Workshop Manager roles).
+  Owner-only tools. The owner (the first login set up) now holds three permissions no other
+  admin gets by default: Bonuses, Alarms and Loans, and only the owner can change, reset or
+  disable the owner's login. Bonuses: per-job bonuses (rate × job price × checks ticked ÷ 7,
+  split by share points), quoted hours from Joinr, confirm, paid shares and what each person is
+  owed. Alarms: alarm holders and codes, stored encrypted and shown for 30 seconds on Show,
+  leavers flagged, the alarm company and weekly arm/disarm times. Loans: rates, repayments with
+  interest worked out, the balance always calculated, statements; grantable to an Accounts
+  login. Database change: the owner mark and new tables (backed up first, as always). Also
+  includes 0.1.13 to 0.1.16.
 developer: Tenon
 website: https://github.com/devcal1/joinr-crosscuts
 dependencies: []
