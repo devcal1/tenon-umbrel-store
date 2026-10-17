@@ -18,7 +18,7 @@ manifestVersion: 1
 id: tenon-joinr-crosscuts
 category: files
 name: Joinr Crosscuts
-version: '0.1.19'
+version: '0.1.20'
 tagline: Operations hub for TH Cabinets
 # `main`, as tenon-joinr-backup's comment explains: a raw.githubusercontent URL names a branch.
 icon: https://raw.githubusercontent.com/devcal1/tenon-umbrel-store/main/tenon-joinr-crosscuts/icon.svg
@@ -43,15 +43,12 @@ description: >-
   **First run:** open `/setup.html` on this app's port (4933) to create the first admin account.
   The page stops working as soon as any user exists.
 releaseNotes: >-
-  Department notes walls: Scheduling, Design/PM, Ordering, Accounts and Admin each get a weekly
-  wall of signed sticky notes (a column per weekday, Last/This/Next week, notes on future days,
-  thumbs-up to acknowledge), each with its own permission. Scheduling menu tidied: the Scheduling
-  and Lookahead pages are removed and Availability moves to Admin (admins only). Planner: a
-  Custom repeat (every N days, weeks, months or years). Pipeline: Leads removed, new jobs start at
-  Quoted, and won Joinr quotes waiting in the inbox show in Quoted as links to Joinr. Dashboard
-  is an outlined button in the menu bar. The board stocktake value step is removed. Database
-  change: a notes table and two Planner columns (backed up first, as always). Also includes
-  0.1.13 to 0.1.18.
+  The Pipeline's Quoted column now lists every Joinr quote that is sent or won, as one-line links
+  to the quote in Joinr, marked SENT or WON. Crosscuts reads Joinr's new open-quotes list every
+  five minutes, or straight away with the Refresh button, and keeps the last list if Joinr can't
+  be reached. A won quote leaves the list once it's accepted or ignored in the inbox. Database
+  change: a small table holding the last list (backed up first, as always). Also includes 0.1.13
+  to 0.1.19.
 developer: Tenon
 website: https://github.com/devcal1/joinr-crosscuts
 dependencies: []
