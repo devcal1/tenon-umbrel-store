@@ -18,7 +18,7 @@ manifestVersion: 1
 id: tenon-joinr-crosscuts
 category: files
 name: Joinr Crosscuts
-version: '0.1.18'
+version: '0.1.19'
 tagline: Operations hub for TH Cabinets
 # `main`, as tenon-joinr-backup's comment explains: a raw.githubusercontent URL names a branch.
 icon: https://raw.githubusercontent.com/devcal1/tenon-umbrel-store/main/tenon-joinr-crosscuts/icon.svg
@@ -43,13 +43,15 @@ description: >-
   **First run:** open `/setup.html` on this app's port (4933) to create the first admin account.
   The page stops working as soon as any user exists.
 releaseNotes: >-
-  Small changes. Planner events can repeat every year. Printed pay-run time sheets are
-  landscape, with wider columns. BAS sales are typed in by hand for every month (invoices no
-  longer count); each new month appears blank, ready to fill in, and the CSV is one line per
-  month. The Accounts Stock value page is removed. New Admin accounts page in the Accounts
-  menu for non-supplier accounts such as BAS, Workcover and insurance, working like Supplier
-  accounts. Database change: two added columns (backed up first, as always). Also includes
-  0.1.13 to 0.1.17.
+  Department notes walls: Scheduling, Design/PM, Ordering, Accounts and Admin each get a weekly
+  wall of signed sticky notes (a column per weekday, Last/This/Next week, notes on future days,
+  thumbs-up to acknowledge), each with its own permission. Scheduling menu tidied: the Scheduling
+  and Lookahead pages are removed and Availability moves to Admin (admins only). Planner: a
+  Custom repeat (every N days, weeks, months or years). Pipeline: Leads removed, new jobs start at
+  Quoted, and won Joinr quotes waiting in the inbox show in Quoted as links to Joinr. Dashboard
+  is an outlined button in the menu bar. The board stocktake value step is removed. Database
+  change: a notes table and two Planner columns (backed up first, as always). Also includes
+  0.1.13 to 0.1.18.
 developer: Tenon
 website: https://github.com/devcal1/joinr-crosscuts
 dependencies: []
