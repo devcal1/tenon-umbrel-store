@@ -18,7 +18,7 @@ manifestVersion: 1
 id: tenon-joinr-crosscuts
 category: files
 name: Joinr Crosscuts
-version: '0.1.20'
+version: '0.1.21'
 tagline: Operations hub for TH Cabinets
 # `main`, as tenon-joinr-backup's comment explains: a raw.githubusercontent URL names a branch.
 icon: https://raw.githubusercontent.com/devcal1/tenon-umbrel-store/main/tenon-joinr-crosscuts/icon.svg
@@ -43,12 +43,14 @@ description: >-
   **First run:** open `/setup.html` on this app's port (4933) to create the first admin account.
   The page stops working as soon as any user exists.
 releaseNotes: >-
-  The Pipeline's Quoted column now lists every Joinr quote that is sent or won, as one-line links
-  to the quote in Joinr, marked SENT or WON. Crosscuts reads Joinr's new open-quotes list every
-  five minutes, or straight away with the Refresh button, and keeps the last list if Joinr can't
-  be reached. A won quote leaves the list once it's accepted or ignored in the inbox. Database
-  change: a small table holding the last list (backed up first, as always). Also includes 0.1.13
-  to 0.1.19.
+  Quotes won in Joinr now become Won jobs automatically (linked to a hand-typed job with the same
+  quote number when there is exactly one), each with a shared to-do for the Design/PM team. Each
+  job shows the full Joinr quote (rooms, lines, labour; money, notes and options only for people
+  who can see job values) and an editable Materials list that can be turned into order lines.
+  Names on Pipeline tiles in each person's worker colour (link logins to workers on the Users
+  page). Pipeline in the Scheduling menu, read only. A Tools page in Design/PM with the batten
+  calculator. Database change: team tasks, job names, materials and quote snapshots (backed up
+  first, as always). Also includes 0.1.13 to 0.1.20.
 developer: Tenon
 website: https://github.com/devcal1/joinr-crosscuts
 dependencies: []
