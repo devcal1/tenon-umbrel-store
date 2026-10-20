@@ -18,7 +18,7 @@ manifestVersion: 1
 id: tenon-joinr-crosscuts
 category: files
 name: Joinr Crosscuts
-version: '0.1.21'
+version: '0.1.22'
 tagline: Operations hub for TH Cabinets
 # `main`, as tenon-joinr-backup's comment explains: a raw.githubusercontent URL names a branch.
 icon: https://raw.githubusercontent.com/devcal1/tenon-umbrel-store/main/tenon-joinr-crosscuts/icon.svg
@@ -43,14 +43,10 @@ description: >-
   **First run:** open `/setup.html` on this app's port (4933) to create the first admin account.
   The page stops working as soon as any user exists.
 releaseNotes: >-
-  Quotes won in Joinr now become Won jobs automatically (linked to a hand-typed job with the same
-  quote number when there is exactly one), each with a shared to-do for the Design/PM team. Each
-  job shows the full Joinr quote (rooms, lines, labour; money, notes and options only for people
-  who can see job values) and an editable Materials list that can be turned into order lines.
-  Names on Pipeline tiles in each person's worker colour (link logins to workers on the Users
-  page). Pipeline in the Scheduling menu, read only. A Tools page in Design/PM with the batten
-  calculator. Database change: team tasks, job names, materials and quote snapshots (backed up
-  first, as always). Also includes 0.1.13 to 0.1.20.
+  While a page loads, or while a save or other action you started is in progress, the mouse
+  pointer becomes the Joinr dot, gently pulsing (still if your device asks for reduced motion).
+  Logins can now be email addresses, and admins can change a login's username on the Users page;
+  passwords, roles and sessions are kept. No database change. Also includes 0.1.13 to 0.1.21.
 developer: Tenon
 website: https://github.com/devcal1/joinr-crosscuts
 dependencies: []
