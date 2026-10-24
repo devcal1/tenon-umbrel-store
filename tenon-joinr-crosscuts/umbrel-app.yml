@@ -18,7 +18,7 @@ manifestVersion: 1
 id: tenon-joinr-crosscuts
 category: files
 name: Joinr Crosscuts
-version: '0.1.22'
+version: '0.1.24'
 tagline: Operations hub for TH Cabinets
 # `main`, as tenon-joinr-backup's comment explains: a raw.githubusercontent URL names a branch.
 icon: https://raw.githubusercontent.com/devcal1/tenon-umbrel-store/main/tenon-joinr-crosscuts/icon.svg
@@ -43,10 +43,10 @@ description: >-
   **First run:** open `/setup.html` on this app's port (4933) to create the first admin account.
   The page stops working as soon as any user exists.
 releaseNotes: >-
-  While a page loads, or while a save or other action you started is in progress, the mouse
-  pointer becomes the Joinr dot, gently pulsing (still if your device asks for reduced motion).
-  Logins can now be email addresses, and admins can change a login's username on the Users page;
-  passwords, roles and sessions are kept. No database change. Also includes 0.1.13 to 0.1.21.
+  Clicking a department name (Scheduling, Design/PM, Ordering, Accounts) opens its Notes page;
+  hover still drops the menu. Admin > Alarms gains Paste list, to add many slots at once from a
+  spreadsheet (slot, name, code), and the weekly times now read Deactivate and Activate.
+  No database change. Also includes 0.1.23.
 developer: Tenon
 website: https://github.com/devcal1/joinr-crosscuts
 dependencies: []
