@@ -18,7 +18,7 @@ manifestVersion: 1
 id: tenon-joinr-crosscuts
 category: files
 name: Joinr Crosscuts
-version: '0.2.0'
+version: '0.2.1'
 tagline: Operations hub for TH Cabinets
 # `main`, as tenon-joinr-backup's comment explains: a raw.githubusercontent URL names a branch.
 icon: https://raw.githubusercontent.com/devcal1/tenon-umbrel-store/main/tenon-joinr-crosscuts/icon.svg
@@ -43,11 +43,11 @@ description: >-
   **First run:** open `/setup.html` on this app's port (4933) to create the first admin account.
   The page stops working as soon as any user exists.
 releaseNotes: >-
-  Design/PM is now Projects: its header opens the notes wall with the dashboard below. Stone orders
-  is now Benchtops, with a new Benchtop designer (draw straight, L and U pieces, edge marks, joins,
-  cut-outs, corner radii, totals) that prints a landscape plan set on the letterhead. Accounts is now
-  Overdue accounts. New Admin > Tasks for recurring tasks. Loans shows each loan side by side with
-  monthly interest, automatic payment splits and payoff plans. Database migrations 036 to 040 (additive).
+  Projects and Ordering are now separate stages. Each job has a project owner, and its Pipeline tile
+  takes that person's colour. A new project page per job shows quoted hours beside days booked, the
+  materials list with colour and finish per line, the hardware list and notes. Finalise order list
+  freezes a printable revision (A, B, C), and Send to Ordering creates the orders by supplier.
+  Database migration 041 (additive).
 developer: Tenon
 website: https://github.com/devcal1/joinr-crosscuts
 dependencies: []
