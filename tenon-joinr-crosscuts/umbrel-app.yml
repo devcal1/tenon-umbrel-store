@@ -18,7 +18,7 @@ manifestVersion: 1
 id: tenon-joinr-crosscuts
 category: files
 name: Joinr Crosscuts
-version: '0.2.5'
+version: '0.2.7'
 tagline: Operations hub for TH Cabinets
 # `main`, as tenon-joinr-backup's comment explains: a raw.githubusercontent URL names a branch.
 icon: https://raw.githubusercontent.com/devcal1/tenon-umbrel-store/main/tenon-joinr-crosscuts/icon.svg
@@ -43,13 +43,12 @@ description: >-
   **First run:** open `/setup.html` on this app's port (4933) to create the first admin account.
   The page stops working as soon as any user exists.
 releaseNotes: >-
-  Projects steps (drawn, check measured, nested) and a requested install date; Send to Ordering
-  makes the 10% deposit due and puts the job on the board two weeks out. When everything is
-  ordered, Scheduling is asked for an install date. A Workshop department with a phone End of shift
-  page: photos, issues and a daily report. A Morning check for Scheduling. Finish week's last choice
-  is now Installed, and the project manager confirms complete (the final 40% falls due then). A
-  Waiting on you tile on the dashboard. Database migrations 042 to 047 (043 rebuilds five notes
-  tables to add Workshop; 044 renames the Projects channel).
+  Workshop manager: a fortnightly stock count with target amounts that fill in what to order;
+  Workshop > Maintenance, confirmed by the workshop manager; board and edge tape stock with
+  reservations for jobs, and jobs marked cut 100% at end of shift. Accounts: a vehicles register
+  (rego, insurance, bookings), individual invoices on Supplier accounts for admin to pay, Mark sent
+  with follow-up per invoice and client terms, and Loans upkeep for Accounts. Database migrations
+  048 to 050.
 developer: Tenon
 website: https://github.com/devcal1/joinr-crosscuts
 dependencies: []
