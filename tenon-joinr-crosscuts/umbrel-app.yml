@@ -18,7 +18,7 @@ manifestVersion: 1
 id: tenon-joinr-crosscuts
 category: files
 name: Joinr Crosscuts
-version: '0.2.7'
+version: '0.2.8'
 tagline: Operations hub for TH Cabinets
 # `main`, as tenon-joinr-backup's comment explains: a raw.githubusercontent URL names a branch.
 icon: https://raw.githubusercontent.com/devcal1/tenon-umbrel-store/main/tenon-joinr-crosscuts/icon.svg
@@ -43,12 +43,12 @@ description: >-
   **First run:** open `/setup.html` on this app's port (4933) to create the first admin account.
   The page stops working as soon as any user exists.
 releaseNotes: >-
-  Workshop manager: a fortnightly stock count with target amounts that fill in what to order;
-  Workshop > Maintenance, confirmed by the workshop manager; board and edge tape stock with
-  reservations for jobs, and jobs marked cut 100% at end of shift. Accounts: a vehicles register
-  (rego, insurance, bookings), individual invoices on Supplier accounts for admin to pay, Mark sent
-  with follow-up per invoice and client terms, and Loans upkeep for Accounts. Database migrations
-  048 to 050.
+  Planner: a Fortnight or Month view and a phone agenda. Jobs: job numbers, a running list of
+  notes with photos, and a list with the chosen job beside it. Pay runs: day and fortnight totals
+  coloured against the usual hours, and public holiday rows take no times. Supplier accounts: delete
+  a line from a month, months up to 36 ahead, and panels of what is unpaid before and owing in the
+  next 3 months. Individual invoices can repeat every so many weeks or months. Notes show names in
+  each person's board colour. Database migrations 051 to 053.
 developer: Tenon
 website: https://github.com/devcal1/joinr-crosscuts
 dependencies: []
