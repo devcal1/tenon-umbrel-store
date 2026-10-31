@@ -18,7 +18,7 @@ manifestVersion: 1
 id: tenon-joinr-crosscuts
 category: files
 name: Joinr Crosscuts
-version: '0.2.8'
+version: '0.2.9'
 tagline: Operations hub for TH Cabinets
 # `main`, as tenon-joinr-backup's comment explains: a raw.githubusercontent URL names a branch.
 icon: https://raw.githubusercontent.com/devcal1/tenon-umbrel-store/main/tenon-joinr-crosscuts/icon.svg
@@ -43,12 +43,11 @@ description: >-
   **First run:** open `/setup.html` on this app's port (4933) to create the first admin account.
   The page stops working as soon as any user exists.
 releaseNotes: >-
-  Planner: a Fortnight or Month view and a phone agenda. Jobs: job numbers, a running list of
-  notes with photos, and a list with the chosen job beside it. Pay runs: day and fortnight totals
-  coloured against the usual hours, and public holiday rows take no times. Supplier accounts: delete
-  a line from a month, months up to 36 ahead, and panels of what is unpaid before and owing in the
-  next 3 months. Individual invoices can repeat every so many weeks or months. Notes show names in
-  each person's board colour. Database migrations 051 to 053.
+  Supplier accounts: one line per account with the dollar total and a PAID toggle as the main
+  figures, and a key for the REC and MYOB ticks. Admin accounts are now part of Supplier accounts
+  (database migration 054; nothing deleted). Overdue accounts is renamed Overdue client invoices.
+  Jobs opens on My jobs (yours as project manager or named on the tile), newest activity first, and
+  job pages are more compact. The Pipeline fits all stages across a 1920px screen.
 developer: Tenon
 website: https://github.com/devcal1/joinr-crosscuts
 dependencies: []
