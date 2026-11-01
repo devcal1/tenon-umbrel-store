@@ -18,7 +18,7 @@ manifestVersion: 1
 id: tenon-joinr-crosscuts
 category: files
 name: Joinr Crosscuts
-version: '0.2.10'
+version: '0.2.11'
 tagline: Operations hub for TH Cabinets
 # `main`, as tenon-joinr-backup's comment explains: a raw.githubusercontent URL names a branch.
 icon: https://raw.githubusercontent.com/devcal1/tenon-umbrel-store/main/tenon-joinr-crosscuts/icon.svg
@@ -43,9 +43,10 @@ description: >-
   **First run:** open `/setup.html` on this app's port (4933) to create the first admin account.
   The page stops working as soon as any user exists.
 releaseNotes: >-
-  Repeating invoices now appear in every month, including months nobody opened, so the earlier-months
-  panel shows everything still owed. Stopping a repeat also removes its future invoices that are unpaid
-  and unchanged. Clearer month-range message; automatic repeats no longer fill the activity log.
+  Pay runs: an admin-only review tick at the left of each worker row tells accounts the hours are
+  checked (changing hours clears it; finalise warns about unticked rows), and admins get a reminder
+  at 2pm on the last Friday of each fortnight. People now have a pay first name and surname, listed
+  as "SURNAME, Firstname" alphabetically; board names are unchanged. Migrations 055 and 056.
 developer: Tenon
 website: https://github.com/devcal1/joinr-crosscuts
 dependencies: []
