@@ -18,7 +18,7 @@ manifestVersion: 1
 id: tenon-joinr-crosscuts
 category: files
 name: Joinr Crosscuts
-version: '0.2.12'
+version: '0.2.14'
 tagline: Operations hub for TH Cabinets
 # `main`, as tenon-joinr-backup's comment explains: a raw.githubusercontent URL names a branch.
 icon: https://raw.githubusercontent.com/devcal1/tenon-umbrel-store/main/tenon-joinr-crosscuts/icon.svg
@@ -43,10 +43,10 @@ description: >-
   **First run:** open `/setup.html` on this app's port (4933) to create the first admin account.
   The page stops working as soon as any user exists.
 releaseNotes: >-
-  New AMEX page under Accounts (same access as Loans): record company card transactions (date,
-  supplier, note, amount) and repayments that tick off the transactions they cover, shown as a
-  statement with a running balance, owing now, and this year's charges and repayments. Printable.
-  Migration 057.
+  Invoices can now be emailed from Crosscuts through Resend: a Send dialog with the PDF attached,
+  an email history with delivered and bounced status, and bounce alerts. Set up the Resend key on
+  the Users page first. The Board gets a TV mode button for the factory TV: fullscreen, current
+  week scaled to fit, screen kept awake. Migration 058.
 developer: Tenon
 website: https://github.com/devcal1/joinr-crosscuts
 dependencies: []
