@@ -18,7 +18,7 @@ manifestVersion: 1
 id: tenon-joinr-crosscuts
 category: files
 name: Joinr Crosscuts
-version: '0.2.19'
+version: '0.2.20'
 tagline: Operations hub for TH Cabinets
 # `main`, as tenon-joinr-backup's comment explains: a raw.githubusercontent URL names a branch.
 icon: https://raw.githubusercontent.com/devcal1/tenon-umbrel-store/main/tenon-joinr-crosscuts/icon.svg
@@ -43,12 +43,9 @@ description: >-
   **First run:** open `/setup.html` on this app's port (4933) to create the first admin account.
   The page stops working as soon as any user exists.
 releaseNotes: >-
-  Board: a Weekend column after Friday, and weekend leave greys the Weekend chip (also in JPG and
-  print). Pay runs: admins can add a day note per person per day, including from a phone via the
-  Dashboard; notes show on the timesheet, Summary and printed summary. End of shift lists weekend
-  jobs (no weekend reminder); the Planner shows Weekend bookings on Saturday and Sunday; pay runs
-  show a Friday hint for weekend work. Invoices: overdue reminder emails at 7, 14 and 30 days with
-  an approval queue and a BCC setting; they ship switched Off. Migrations 060 to 062.
+  Pay runs: a Prefill button on each timesheet fills standard hours on blank days (Mon to Thu 07:00
+  to 15:30, Fri 07:00 to 13:30, 30 min lunch), skipping public holidays, leave and regular days off.
+  It fills the cells only; check them and press Save. No database change.
 developer: Tenon
 website: https://github.com/devcal1/joinr-crosscuts
 dependencies: []
