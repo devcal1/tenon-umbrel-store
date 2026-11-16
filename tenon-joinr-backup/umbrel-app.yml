@@ -20,7 +20,7 @@ manifestVersion: 1
 id: tenon-joinr-backup
 category: files
 name: Joinr Backup
-version: '1.2.0'
+version: '1.3.0'
 tagline: Weekly encrypted backup of the Joinr database and the files customers uploaded
 # `main`, not `master` — that is this repository's default branch, and a raw.githubusercontent URL
 # names a branch rather than following the default. The first version said `master`, copied from a
@@ -64,62 +64,25 @@ description: >-
   the finished archive is opened again with its own passphrase. An archive that fails either check
   is parked under a name this app will never count as a backup, and the page says so.
 releaseNotes: >-
-  **The files people attach to quotes are now backed up.**
+  **The photos and plans people send through a shop's enquiry page are now backed up too.**
 
 
-  Joinr lets a shop attach a plan, a drawing or a photo to a quote. Those files are not in the
-  weekly archive. They are kept in a folder called `attachments` beside the archives, one
-  separately encrypted file per document, and — wherever the copy to the NAS is set up — they go
-  across after the archives do. Logos, banners and terms PDFs are still inside the weekly
-  archive, exactly as before.
+  A shop that switches on its public enquiry page gets files from strangers: photos of a room,
+  a plan, a drawing. Those files are kept in the same folder as quote attachments, called
+  `attachments`, one separately encrypted file per document, and — wherever the copy to the NAS
+  is set up — they go across after the archives do. Nothing about how that folder works has
+  changed: it is never tidied, nothing in it can be read from its name, and the same file sent
+  twice is stored once.
 
 
-  **They are kept apart because they never change.** A logo gets replaced, so a fresh copy of it
-  every week is the right thing to do. An attachment is uploaded once and then stays as it is —
-  so putting all of them inside every weekly archive would mean each week's archive growing to
-  hold every file ever attached, and the same files being sent up to the NAS again every week.
+  The archive's list of files (`attachments.json`) now says which are quote attachments and
+  which are enquiry files, and putting them back is the same command as before. A restore into
+  a new organisation through Settings › Backup & import cannot place enquiry files — enquiries
+  themselves are not part of that backup — and says so rather than failing; a whole-project
+  restore puts them back exactly where they were.
 
 
-  **Nothing about a file can be read from its name.** Each one is its own small 7-Zip archive,
-  opened with the same passphrase as the backups, named after a fingerprint of what is inside it.
-  No job name, no customer name and no file name appears in the folder — and a drawing attached
-  to two quotes is stored once rather than twice.
-
-
-  **Nothing in that folder is ever deleted**, here or on the NAS. The archives are tidied down to
-  the newest sixteen every week, as before; the attachments folder is never tidied, so a file
-  whose quote was deleted months ago is still there. The copy is checked the same way the
-  archives are — once the files are sent, the NAS's own list is read back and counted, rather
-  than the transfer being taken at its word.
-
-
-  **Restoring now takes two things: an archive and that folder.** The instructions inside every
-  archive (`README-restore.txt`) have grown to cover both: the two commands to run, and for
-  the letterheads a by-hand way through for somebody with no developer tools to hand. (An
-  attachment can be opened by hand with the passphrase, but only the command puts one back on a
-  quote.) The archive's `manifest.txt`
-  lists every attached file the backup saw and which file in the folder holds it — the archive is
-  the index, and the folder on its own is meant to be meaningless without it.
-
-
-  **A shop that has attached nothing sees nothing new on the NAS.** An empty folder sends nothing
-  and creates nothing there; the page and the log simply report zero attachments. And if this
-  server is ever short of room, the attachments alone are skipped with a sentence saying so — the
-  database and the letterheads are still backed up.
-
-
-  The status page gains an **Attachments** row: how many attached files Joinr holds, how many
-  were new this run, and how many files the folder here holds and how big it is. The NAS line
-  now says how many of them went across.
-
-
-  **There is nothing to set up.** Press Update; the app makes the folder itself, and the next
-  backup mirrors whatever has been attached.
-
-
-  ⚠️ **UNINSTALLING THIS APP STILL DELETES EVERY BACKUP IT HOLDS** — and now the attachments
-  folder with them, since it sits in the same place. Updating deletes nothing, and neither
-  touches the copies on the NAS.
+  Nothing to do after updating. An install with no enquiry files behaves exactly as 1.2.0 did.
 developer: Tenon
 website: https://joinr.com.au
 dependencies: []
