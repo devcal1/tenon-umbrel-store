@@ -18,7 +18,7 @@ manifestVersion: 1
 id: tenon-joinr-crosscuts
 category: files
 name: Joinr Crosscuts
-version: '0.2.20'
+version: '0.2.21'
 tagline: Operations hub for TH Cabinets
 # `main`, as tenon-joinr-backup's comment explains: a raw.githubusercontent URL names a branch.
 icon: https://raw.githubusercontent.com/devcal1/tenon-umbrel-store/main/tenon-joinr-crosscuts/icon.svg
@@ -43,9 +43,11 @@ description: >-
   **First run:** open `/setup.html` on this app's port (4933) to create the first admin account.
   The page stops working as soon as any user exists.
 releaseNotes: >-
-  Pay runs: a Prefill button on each timesheet fills standard hours on blank days (Mon to Thu 07:00
-  to 15:30, Fri 07:00 to 13:30, 30 min lunch), skipping public holidays, leave and regular days off.
-  It fills the cells only; check them and press Save. No database change.
+  Pay runs: overtime now first tops a person's ordinary hours (normal time plus leave, sick and
+  public holidays) up to 76 hours for the fortnight; only overtime above that is paid at time and a
+  half. Double time is always paid. Finalised pay runs keep their figures. Benchtops: a New benchtop
+  plan button, a Find a plan box, and job number, client and project manager on the plans list. No
+  database change.
 developer: Tenon
 website: https://github.com/devcal1/joinr-crosscuts
 dependencies: []
