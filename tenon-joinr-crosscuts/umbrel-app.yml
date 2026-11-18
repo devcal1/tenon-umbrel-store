@@ -18,7 +18,7 @@ manifestVersion: 1
 id: tenon-joinr-crosscuts
 category: files
 name: Joinr Crosscuts
-version: '0.2.22'
+version: '0.2.23'
 tagline: Operations hub for TH Cabinets
 # `main`, as tenon-joinr-backup's comment explains: a raw.githubusercontent URL names a branch.
 icon: https://raw.githubusercontent.com/devcal1/tenon-umbrel-store/main/tenon-joinr-crosscuts/icon.svg
@@ -43,10 +43,11 @@ description: >-
   **First run:** open `/setup.html` on this app's port (4933) to create the first admin account.
   The page stops working as soon as any user exists.
 releaseNotes: >-
-  Ordering > Orders: job cards. Add a card per job with each hardware item's supplier and quantity,
-  then use New supplier order to tick off everything ordered from one supplier in one go (order
-  date, expected date and supplier reference). Print list and Print card sheets. Quantity also shows
-  on the job page, Deliveries and the edit dialog. One additive database change (order quantity).
+  Ordering: each supplier order is now saved as a purchase order (PO-0001 and up) with a PDF kept
+  exactly as ordered; find past orders on the new Supplier orders tab and view, print or download
+  them. Job card items link to their PO. Delete lines still to order, or a whole job card (hidden,
+  kept on record; admins can restore). New supplier orders start with nothing ticked. Three additive
+  database changes.
 developer: Tenon
 website: https://github.com/devcal1/joinr-crosscuts
 dependencies: []
