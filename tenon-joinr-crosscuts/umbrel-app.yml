@@ -18,7 +18,7 @@ manifestVersion: 1
 id: tenon-joinr-crosscuts
 category: files
 name: Joinr Crosscuts
-version: '0.2.21'
+version: '0.2.22'
 tagline: Operations hub for TH Cabinets
 # `main`, as tenon-joinr-backup's comment explains: a raw.githubusercontent URL names a branch.
 icon: https://raw.githubusercontent.com/devcal1/tenon-umbrel-store/main/tenon-joinr-crosscuts/icon.svg
@@ -43,11 +43,10 @@ description: >-
   **First run:** open `/setup.html` on this app's port (4933) to create the first admin account.
   The page stops working as soon as any user exists.
 releaseNotes: >-
-  Pay runs: overtime now first tops a person's ordinary hours (normal time plus leave, sick and
-  public holidays) up to 76 hours for the fortnight; only overtime above that is paid at time and a
-  half. Double time is always paid. Finalised pay runs keep their figures. Benchtops: a New benchtop
-  plan button, a Find a plan box, and job number, client and project manager on the plans list. No
-  database change.
+  Ordering > Orders: job cards. Add a card per job with each hardware item's supplier and quantity,
+  then use New supplier order to tick off everything ordered from one supplier in one go (order
+  date, expected date and supplier reference). Print list and Print card sheets. Quantity also shows
+  on the job page, Deliveries and the edit dialog. One additive database change (order quantity).
 developer: Tenon
 website: https://github.com/devcal1/joinr-crosscuts
 dependencies: []
