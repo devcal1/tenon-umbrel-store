@@ -18,7 +18,7 @@ manifestVersion: 1
 id: tenon-joinr-crosscuts
 category: files
 name: Joinr Crosscuts
-version: '0.2.24'
+version: '0.2.25'
 tagline: Operations hub for TH Cabinets
 # `main`, as tenon-joinr-backup's comment explains: a raw.githubusercontent URL names a branch.
 icon: https://raw.githubusercontent.com/devcal1/tenon-umbrel-store/main/tenon-joinr-crosscuts/icon.svg
@@ -43,9 +43,9 @@ description: >-
   **First run:** open `/setup.html` on this app's port (4933) to create the first admin account.
   The page stops working as soon as any user exists.
 releaseNotes: >-
-  Red new-alert badges show where each unread alert is: on the menu, the page heading or job tab,
-  and the item in a list; opening the page clears them. Intake now sits at the bottom of the
-  Projects page (no longer in the menu). Open tasks get a Done button with Undo. No database change.
+  Bug fixes: board buttons ignore double clicks, the board moves to the new week after the TV
+  sleeps, and the JPG Weekend column matches the screen. Orders, reservations, paid bills, invoice
+  reminders, task order and audit privacy tightened. No database change.
 developer: Tenon
 website: https://github.com/devcal1/joinr-crosscuts
 dependencies: []
