@@ -20,7 +20,7 @@ manifestVersion: 1
 id: tenon-joinr-backup
 category: files
 name: Joinr Backup
-version: '1.4.0'
+version: '1.4.1'
 tagline: Weekly encrypted backup of the Joinr database and the files customers uploaded
 # `main`, not `master` — that is this repository's default branch, and a raw.githubusercontent URL
 # names a branch rather than following the default. The first version said `master`, copied from a
@@ -64,21 +64,28 @@ description: >-
   the finished archive is opened again with its own passphrase. An archive that fails either check
   is parked under a name this app will never count as a backup, and the page says so.
 releaseNotes: >-
-  **The photos a shop's staff take on site are now backed up too.**
+  **A backup that left the uploaded files out now says so where you look first.**
 
 
-  A shop that uses Site visits takes photos of each room on the client's property from a phone.
-  Those photos are kept in the same folder as quote attachments, called `attachments`, one
-  separately encrypted file per photo, and — wherever the copy to the NAS is set up — they go
-  across after the archives do. The archive's list of files (`attachments.json`) now says which
-  are site-visit photos, and putting them back is the same command as before, or
-  `--only site-visits` for just those. A restore into a new organisation through Settings ›
-  Backup & import cannot place them — site visits themselves are not part of that backup — and
-  says so rather than failing; a whole-project restore puts them back exactly where they were.
+  When the database was backed up and checked but the uploaded files were not all taken — there is no
+  service-role key on this server, the file list could not be read from Storage, or the quote
+  attachments could not be copied this run — the page used to say "Up to date" and give the
+  reason only in the problems list further down. It now shows "Backed up — files skipped" in
+  amber, with the reason in plain words at the top and in the last backup's details. It still
+  counts as a good backup: the database is the half that matters most, and it was taken.
 
 
-  Nothing to do after updating. An install with no site-visit photos behaves exactly as 1.3.0
-  did.
+  If a monitoring address is set up, the success signal for such a run carries one short line
+  saying the files were skipped. The monitoring service shows it in the check's log; it does not
+  raise an alert for it.
+
+
+  Also fixed: if Storage said there were more files to list but gave no way to fetch them, the
+  backup used to carry on with the part of the list it had and report nothing. It now treats the
+  files as skipped and shows the warning above.
+
+
+  Nothing to do after updating. A backup that took everything looks exactly as it did in 1.4.0.
 developer: Tenon
 website: https://joinr.com.au
 dependencies: []
