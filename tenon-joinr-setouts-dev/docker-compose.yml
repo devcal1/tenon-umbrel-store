@@ -25,7 +25,7 @@ services:
       PROXY_AUTH_ADD: "false"
 
   web:
-    image: ghcr.io/devcal1/tenon-joinr-setouts:0.2.0@sha256:98142b63deec5cf3e35bac0b103f76e25f4224c15e0b3e91294288933dc0d69e
+    image: ghcr.io/devcal1/tenon-joinr-setouts:0.3.0@sha256:b9ce8711bfc61dc54a2b46279f9380bdf095b85b3e63029f8f9112cd5a308ca0
     restart: on-failure
     # The server keeps everything under /data. The `data/` skeleton beside this file is rsynced into
     # app-data as uid 1000 before the container first starts (dropping the .gitkeep files), and the
