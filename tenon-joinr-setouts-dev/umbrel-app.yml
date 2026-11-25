@@ -20,7 +20,7 @@ manifestVersion: 1
 id: tenon-joinr-setouts-dev
 category: developer
 name: Joinr Setouts Dev
-version: '0.1.0'
+version: '0.1.1'
 tagline: Development build of Joinr Setouts
 # `main`, as tenon-joinr-backup's comment explains: a raw.githubusercontent URL names a branch.
 icon: https://raw.githubusercontent.com/devcal1/tenon-umbrel-store/main/tenon-joinr-setouts-dev/icon.svg
@@ -38,7 +38,7 @@ description: >-
   of it because the app will do its own sign-in, and the "Require Umbrel login" toggle in umbrelOS
   must stay off. Until sign-in is built, anyone on the workshop network can open it.
 releaseNotes: >-
-  First development build: a placeholder page showing the app version.
+  Second development build, to prove an update keeps the app's data.
 developer: Tenon
 website: https://github.com/devcal1/tenon-setouts
 dependencies: []
