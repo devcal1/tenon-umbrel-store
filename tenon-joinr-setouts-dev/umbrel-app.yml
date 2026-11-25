@@ -1,0 +1,63 @@
+# THIS `id` IS A DEV ID. It is NOT the permanent `tenon-joinr-setouts`, which this stage does not
+# create. The dev app has its own id and its own data, separate from the real app's, so builds can be
+# tried and thrown away. Umbrel still treats a change of app id (or of the store id it is prefixed
+# with) as uninstall-and-reinstall, and UNINSTALLING DELETES THIS APP'S DATA DIRECTORY without
+# asking.
+#
+# EVERY REQUIRED FIELD IS FILLED, as in tenon-joinr-crosscuts/umbrel-app.yml (the required set is
+# `REQUIRED_MANIFEST_FIELDS` in getumbrel/umbrel-apps' `.tools/lint-apps.mjs`): manifestVersion,
+# id, category, name, version, tagline, description, developer, website, dependencies, repo,
+# support, port, gallery, path, submitter, submission.
+#
+# `manifestVersion: 1`: no lifecycle hooks.
+#
+# BUMP `version:` ON EVERY IMAGE CHANGE. Umbrel offers an update only when this field differs from
+# the installed one. Keep it equal to `version` in tenon-setouts' root package.json, which is the
+# tag of the image named in docker-compose.yml: that repository's CI refuses an app-code push
+# without a bump, and prints the image line to paste into this folder's compose file (the CI run
+# summary: GitHub -> Actions -> the run -> Summary).
+manifestVersion: 1
+id: tenon-joinr-setouts-dev
+category: developer
+name: Joinr Setouts Dev
+version: '0.1.0'
+tagline: Development build of Joinr Setouts
+# `main`, as tenon-joinr-backup's comment explains: a raw.githubusercontent URL names a branch.
+icon: https://raw.githubusercontent.com/devcal1/tenon-umbrel-store/main/tenon-joinr-setouts-dev/icon.svg
+description: >-
+  The development build of Joinr Setouts, the joinery design program. It is used to try builds
+  before they are released as the real app, and it has its own data, separate from the real app's.
+
+
+  ⚠️ **UNINSTALLING THIS APP DELETES ITS DATA.** Umbrel removes an app's data directory when the
+  app is uninstalled, without asking.
+
+
+  **HTTPS and login:** it opens over HTTPS, using Umbrel's own certificate; the browser may warn
+  until the Umbrel certificate is installed on the device. Umbrel's login is switched off in front
+  of it because the app will do its own sign-in, and the "Require Umbrel login" toggle in umbrelOS
+  must stay off. Until sign-in is built, anyone on the workshop network can open it.
+releaseNotes: >-
+  First development build: a placeholder page showing the app version.
+developer: Tenon
+website: https://github.com/devcal1/tenon-setouts
+dependencies: []
+repo: https://github.com/devcal1/tenon-setouts
+support: https://github.com/devcal1/tenon-setouts/issues
+# Checked on 25 Nov 2026 against every `port:` in all 403 app manifests of a shallow clone of
+# getumbrel/umbrel-apps at commit f8b4f29714346aeee3c0f5ee3acfeab3cd540d8e (nothing in 4900-4999,
+# so 4935 is free there, and no docker-compose.yml there publishes a host port in 4900-4999), against
+# the other apps in this store (4930 Joinr Registry, 4931 Joinr Backup, 4932 Joinr Finance, 4933
+# Joinr Crosscuts, 4934 AJD Design Manager) and against the TH Cabinets store (thcabinets-splash on
+# 4090). The device's own listeners and any other community store installed on it still have to be
+# checked at install, as for the other apps here.
+port: 4935
+requiresHttps: true
+gallery: []
+path: ''
+defaultUsername: ''
+defaultPassword: ''
+submitter: Tenon
+# As tenon-joinr-backup: a community app has no submission pull request, so this names the
+# repository the app is published from.
+submission: https://github.com/devcal1/tenon-umbrel-store

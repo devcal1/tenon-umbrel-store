@@ -1,0 +1,11 @@
+# The app's runtime data directory, guarded here rather than in the root ignore file (the same rule
+# the other apps have there). Umbrel rsyncs this tree into `app-data` at install (dropping the
+# .gitkeep files), which is how the bind-mount source exists and is owned by the right uid before
+# the container first starts.
+#
+# The DIRECTORIES are tracked, through their .gitkeep files. Nothing else under here ever may be:
+# on a machine that has actually run the app it holds the workshop's data. This repository is
+# public.
+data/**
+!data/**/
+!data/**/.gitkeep

@@ -1,0 +1,36 @@
+# THE IMAGE IS PINNED BY TAG **AND** DIGEST, as tenon-joinr-crosscuts' is. The tag is the app
+# version (the same as `version:` in umbrel-app.yml and `version` in tenon-setouts' root
+# package.json); the digest is exactly what code runs. A version tag is immutable: tenon-setouts'
+# CI refuses to build a version whose tag already exists, so a tag here can never silently point at
+# different code.
+#
+# WHERE THE LINE COMES FROM: a push to tenon-setouts main publishes the image, and the workflow
+# prints the exact `image:` line for this file in its run summary (GitHub -> Actions -> the run ->
+# Summary). The line is PASTED, never typed or edited. Paste it over the line below, then bump
+# `version:` and `releaseNotes:` in umbrel-app.yml together, and push.
+
+version: '3.7'
+
+services:
+  app_proxy:
+    environment:
+      # Format: <app-id>_<docker-service-name>_1
+      APP_HOST: tenon-joinr-setouts-dev_web_1
+      # The port the app listens on inside its container.
+      APP_PORT: 3000
+      # Joinr Setouts will do its own sign-in, so umbrelOS's proxy auth is switched off. There is NO
+      # PROXY_AUTH_WHITELIST: with proxy auth off umbreld never reads one. ALSO keep the per-app
+      # "Require Umbrel login" toggle in the umbrelOS UI OFF: on umbrelOS 2.0 it overrides this
+      # line and puts a second login in front of the app's own.
+      PROXY_AUTH_ADD: "false"
+
+  web:
+    image: ghcr.io/devcal1/tenon-joinr-setouts:0.1.0@sha256:4de93e663f34a83cb8c4d91491b2604527fbc3fc63ac7b3b48edf8c76a3b552a
+    restart: on-failure
+    # The server keeps everything under /data. The `data/` skeleton beside this file is rsynced into
+    # app-data as uid 1000 before the container first starts (dropping the .gitkeep files), and the
+    # image runs as uid 1000 (the `node` user), so it can write there. One directory mount, never a
+    # single-file mount. On first start the server writes schema-version.json and first-start.json
+    # there.
+    volumes:
+      - ${APP_DATA_DIR}/data:/data
