@@ -1,8 +1,8 @@
 # Tenon — Umbrel community app store
 
 A private-use [Umbrel](https://umbrel.com) community app store holding the apps Tenon runs on its
-own hardware. It contains five apps: **Joinr Backup**, **Joinr Registry**, **Joinr Finance**,
-**Joinr Crosscuts** and **AJD Design Manager**.
+own hardware. It contains six apps: **Joinr Backup**, **Joinr Registry**, **Joinr Finance**,
+**Joinr Crosscuts**, **AJD Design Manager** and **Joinr Setouts Dev**.
 
 ## ⚠️ Read this first
 
@@ -21,12 +21,18 @@ uninstalled — no prompt, no undo:
 - **AJD Design Manager**: the practice database, every uploaded image **and the app's own nightly
   backups, which live inside the same folder**. Copy the app's data folder somewhere that is not
   this server before you uninstall it.
+- **Joinr Setouts Dev**: its data folder, which today holds only the data's schema version and
+  the marker recording the app's first start. Losing them costs nothing that matters yet — a
+  reinstall writes both again, with a new first-start date — but it is still a deletion, and it
+  will matter once the app keeps real work.
 
 For the same reason, **the store id (`tenon`) and every app id (`tenon-joinr-backup`,
 `tenon-joinr-registry`, `tenon-joinr-finance`, `tenon-joinr-crosscuts`,
-`tenon-ajd-design-manager`) are permanent**. Umbrel prefixes every community
-app's id with its store's id and treats a change to either as uninstall-and-reinstall. Renaming
-one line in this repository would destroy that app's data.
+`tenon-ajd-design-manager`, `tenon-joinr-setouts-dev`) are permanent**. Umbrel prefixes every
+community app's id with its store's id and treats a change to either as uninstall-and-reinstall.
+Renaming one line in this repository would destroy that app's data. The id `tenon-joinr-setouts`
+is reserved for the real Joinr Setouts app, which is not in this store yet; the dev app's id is
+deliberately different, so the two never share data.
 
 ## Adding it to your Umbrel
 
@@ -162,6 +168,30 @@ digest.
 - **Data:** `data/` holds `ajd.db` (and its `-wal`/`-shm` files), `uploads/` and `backups/`.
   ⚠️ Uninstalling the app deletes all of it (see above).
 
+### Joinr Setouts Dev
+
+**Joinr Setouts Dev** is the development build of Joinr Setouts, the joinery design program. It is
+for trying builds on this Umbrel beside the real app, which does not exist yet; the real app will
+have its own id and its own data. Its source is the private `devcal1/tenon-setouts` repository,
+whose CI builds the image (amd64 only) and publishes it to GitHub Container Registry as the public
+package `ghcr.io/devcal1/tenon-joinr-setouts`; the compose file here pins it by tag **and**
+digest.
+
+- **What it does today:** it shows a placeholder page with the app version. `/api/health` reports
+  the version, the schema version of its data and the first-start marker (the version and time of
+  the app's first start). Nothing else is built yet.
+- **HTTPS:** the manifest sets `requiresHttps: true`, so the dashboard's Open button opens it over
+  HTTPS. umbrelOS 2 carries plain HTTP and TLS on the same app port, with a certificate from its
+  own local certificate authority, so the browser warns until that authority's certificate is
+  installed on the PC.
+- **Access:** it will do its own sign-in, so Umbrel's login is switched off in front of it
+  (`PROXY_AUTH_ADD: "false"`, no whitelist). Umbrel's per-app **Require Umbrel login** toggle must
+  stay **off**: on umbrelOS 2.0 it overrides the compose file and would put a second login in
+  front of the app's own. **Today nothing is in front of it:** sign-in is not built yet, so anyone
+  who can reach port 4935 sees the placeholder page.
+- **Data:** `data/` holds `schema-version.json` and `first-start.json`, both written on first
+  start. ⚠️ Uninstalling the app deletes it (see above); today that loses only those two files.
+
 ## Ports
 
 | Port | App | Notes |
@@ -171,6 +201,7 @@ digest.
 | 4932 | Joinr Finance | through Umbrel's app proxy |
 | 4933 | Joinr Crosscuts | through Umbrel's app proxy; its own login |
 | 4934 | AJD Design Manager | through Umbrel's app proxy; its own login |
+| 4935 | Joinr Setouts Dev | through Umbrel's app proxy, over HTTPS; no login yet |
 
 Each was checked against every app manifest of every app store on the device and against the
 host's listeners; joinr-fin's release script re-checks 4930 and 4932 before every release. 4933
@@ -178,7 +209,10 @@ was checked on 10 Oct 2026 against every manifest in getumbrel/umbrel-apps, this
 the TH Cabinets store; **the device's own listeners and its other stores still need checking at
 install**. 4934 was chosen on 12 Oct 2026 as the next number after 4933 and checked against this
 repository's manifests only: **it has not been checked against getumbrel/umbrel-apps, the TH
-Cabinets store or the device, and still needs that check at install**.
+Cabinets store or the device, and still needs that check at install**. 4935 was checked on 25 Nov
+2026 against all 403 manifests in getumbrel/umbrel-apps (commit `f8b4f29`), this repository and
+the TH Cabinets store; **it was not checked against the device's own listeners or its other stores
+before install**. The app was installed on the device on 25 Nov 2026 and runs there.
 
 ## What is in this repository, and what is not
 
@@ -214,14 +248,23 @@ tenon-ajd-design-manager/
                                   by tag AND digest
   icon.svg                        the dashboard tile
   data/                           the data directory skeleton (.gitkeep only)
+tenon-joinr-setouts-dev/
+  umbrel-app.yml                  the manifest — `version:` is the app version
+  docker-compose.yml              app_proxy (Umbrel login off) and the image from ghcr.io, pinned
+                                  by tag AND digest
+  icon.svg                        the dashboard tile
+  .gitignore                      keeps data out of git: directories and .gitkeep files only
+  data/                           the data directory skeleton (.gitkeep only)
 ```
 
 **This repository is public, so it holds no credential of any kind, and it never will.** It
 carries only manifests, compose files, icons and empty data skeletons. Joinr Backup's source lives
 in a private repository and its image is published to GitHub Container Registry, pinned here by
-digest. Joinr Crosscuts' source is public and its image is published to GitHub Container
-Registry, pinned here by digest. Joinr Finance's source is public and its image never leaves the
-Umbrel.
+digest. Joinr Crosscuts' and AJD Design Manager's sources are public and their images are
+published to GitHub Container Registry, pinned here by digest. Joinr Setouts Dev's source is
+private (`devcal1/tenon-setouts`) but its image is public on GitHub Container Registry, pinned
+here by digest. Joinr Finance's source is public and its image never leaves the Umbrel. Joinr
+Registry runs the Distribution project's `registry` image from Docker Hub, pinned here by digest.
 
 ## Releasing
 
@@ -266,6 +309,18 @@ Umbrel.
 2. Paste `ghcr.io/devcal1/ajd-design-manager:X.Y.Z@sha256:<digest>` over the `image:` line in
    `tenon-ajd-design-manager/docker-compose.yml`.
 3. Bump `version:` in `tenon-ajd-design-manager/umbrel-app.yml` to `X.Y.Z` and write
+   `releaseNotes:` — **an update Umbrel never offers is an update nobody gets**.
+4. Push. Umbrel polls for changes roughly every five minutes. Then click Update.
+
+### Joinr Setouts Dev
+
+1. In tenon-setouts, bump `version` in the root `package.json` (every app-code change is a new
+   version, and CI refuses one on `main` without a bump), then merge to `main`. CI publishes the
+   image and its run prints the line to paste:
+   `image: ghcr.io/devcal1/tenon-joinr-setouts:<version>@sha256:<digest>`. A version tag is never
+   rebuilt.
+2. Paste that line over the `image:` line in `tenon-joinr-setouts-dev/docker-compose.yml`.
+3. Bump `version:` in `tenon-joinr-setouts-dev/umbrel-app.yml` to the same version and write
    `releaseNotes:` — **an update Umbrel never offers is an update nobody gets**.
 4. Push. Umbrel polls for changes roughly every five minutes. Then click Update.
 
