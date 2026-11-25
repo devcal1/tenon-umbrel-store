@@ -18,7 +18,7 @@ manifestVersion: 1
 id: tenon-joinr-crosscuts
 category: files
 name: Joinr Crosscuts
-version: '0.2.26'
+version: '0.2.27'
 tagline: Operations hub for TH Cabinets
 # `main`, as tenon-joinr-backup's comment explains: a raw.githubusercontent URL names a branch.
 icon: https://raw.githubusercontent.com/devcal1/tenon-umbrel-store/main/tenon-joinr-crosscuts/icon.svg
@@ -43,9 +43,9 @@ description: >-
   **First run:** open `/setup.html` on this app's port (4933) to create the first admin account.
   The page stops working as soon as any user exists.
 releaseNotes: >-
-  Intake: assign a project manager from a dropdown. Job page: a one-screen Overview edited card by
-  card, a Quote tab that shows the Joinr PDF (once Joinr offers it), and an Orders and materials
-  list prefilled from Joinr with one Send to orders button. Database migration 067 (additive).
+  Orders: a Stock section with one stock order per month, filled in by the fortnightly stock count.
+  Anyone can add items, shown with who and when; Ordering and admin order them, with job items, on
+  one purchase order. Every role can open Orders. Database migration 068 (additive).
 developer: Tenon
 website: https://github.com/devcal1/joinr-crosscuts
 dependencies: []
